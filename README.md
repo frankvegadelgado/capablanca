@@ -1,4 +1,4 @@
-# CAPABLANCA| SAT Solver
+# CAPABLANCA-SAT Solver
 ![](docs/capablanca.jpg)
 
 # SAT Problem
