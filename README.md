@@ -24,7 +24,7 @@ Example
 
 Instance: The Boolean formula $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations.
 
-Answer: Satisfiable. The formula is satisfiable when all variables are assigned the value "true," resulting in a satisfying truth assignment.
+Answer: Satisfiable.
 
 Input of this project
 -----
@@ -49,7 +49,7 @@ p cnf 4 2
 Downloading and Installing
 -----
 
-Install Python 3.10, 3.11, or 3.12.
+Install Python >=3.6.
 
 Download and Install the NetworkX's Library version 3.3 and its dependencies 
 
@@ -57,6 +57,17 @@ If you use pip, you can install NetworkX's Library and its dependencies with:
 -----
 ```
 pip install networkx[default]
+```
+-----
+
+Download and Install the following Number Theory Library 
+
+- Z3 is a theorem prover from Microsoft Research with support for bitvectors, booleans, arrays, floating point numbers, strings, and other data types.
+
+If you use pip, you can install Z3 with:
+-----
+```
+pip install z3-solver
 ```
 -----
 
@@ -69,27 +80,27 @@ git clone https://github.com/frankvegadelgado/capablanca.git
 cd capablanca 
 ```
 
-On capablanca directory run
+On `capablanca\src\capablanca` directory run
 
 ```
-python solver.py -i file.cnf
+python satpy.py -i ..\..\file.cnf
 ```
 
 Finally, the console output will display:
 
 ```
 s SATISFIABLE
-v 1 2 3 4 0
+v 1 3 4 -2 0
 ```
 
-that means all variables are assigned the value "true" and negative values indicate a variable is assigned "false".
+that means all positive variables are assigned the value "true" and negative values indicate a variable is assigned "false".
 
 # **SAT Benchmarks** 
 
 We can run the DIMACS files (with the .cnf extension) in the simplest benchmarks folder to output solutions for satisfiable formulas:
 
 ```
->  python solver.py -i .\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
+>  python satpy.py -i ..\..\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
 s SATISFIABLE
 v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46 48 -50 -49 -47 -45 -44 -37 -34 -33 -32 -29 -25 -16 -15 -13 -12 -11 -10 -6 -5 -4 -1 0
 ```
@@ -97,7 +108,7 @@ v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46
 and
 
 ```
-> python solver.py -i .\benchmarks\simplest\aim-50-1_6-no-1.cnf
+> python satpy.py -i ..\..\benchmarks\simplest\aim-50-1_6-no-1.cnf
 s UNSATISFIABLE
 ```
 
@@ -112,16 +123,16 @@ where these formulas were obtained from the well-known [SAT Benchmarks](https://
 
 # Command Options
 
-In the `capablanca` directory, running the command:
+In the `capablanca\src\capablanca` directory, running the command:
 
 ```
-python solver.py -h
+python satpy.py -h
 ```
 
 will display the following help output:
 
 ```
-usage: solver.py [-h] -i INPUTFILE [-v] [-t]
+usage: satpy.py [-h] -i INPUTFILE [-v] [-t]
 
 Solve the Boolean Satisfiability (SAT) problem using a DIMACS file as input.
 
@@ -143,8 +154,7 @@ where it is described all the possible options.
 # Complexity
 
 ````diff
-+ We solve the Boolean Satisfiability (SAT) problem in polynomial time.
-+ Consequently, we shwo that P = NP.
++ We effciently solve the Boolean Satisfiability (SAT) Problem.
 ````
  
 # License
