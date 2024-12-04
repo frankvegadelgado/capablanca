@@ -9,6 +9,10 @@ Question: Is $\phi$ satisfiable?
  
 **Note: This problem is NP-complete (If any NP-complete can be solved in polynomial time, then P = NP)**.
 
+# Research
+
+This work is based on the following published article: [On the P versus NP Problem](https://www.preprints.org/manuscript/202409.2053/v10).
+
 # Theory
 
 - A literal in a Boolean formula is an occurrence of a variable or its negation. A Boolean formula is in conjunctive normal form, or CNF, if it is expressed as an AND of clauses, each of which is the OR of one or more literals. 
