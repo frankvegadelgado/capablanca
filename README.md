@@ -7,7 +7,7 @@ Instance: A Boolean formula $\phi$ in CNF.
 
 Question: Is $\phi$ satisfiable?
  
-**Note: This problem is NP-complete (If any NP-complete can be solved in polynomial time, then $P = NP$)**.
+**Note: This problem is NP-complete (If any NP-complete can be solved in polynomial time, then P = NP)**.
 
 # Theory
 
@@ -25,7 +25,7 @@ Answer: Satisfiable. The formula is satisfiable when all variables are assigned 
 Input of this project
 -----
 
-The input is on [DIMACS](http://www.satcompetition.org/2009/format-benchmarks2009.html) formula with the extension .cnf.
+The input is on [DIMACS](https://jix.github.io/varisat/manual/0.2.0/formats/dimacs.html) formula with the extension .cnf.
   
 The **file.cnf** on DIMACS format for $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ is
 ```  
