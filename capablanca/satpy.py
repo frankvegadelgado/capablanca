@@ -6,12 +6,12 @@ import argparse
 import sys
 import time
 
-import satsolver
-import z3solver
-import reduction
-import parser
-import satlogger
-import tester
+from . import satsolver
+from . import z3solver
+from . import reduction
+from . import parser
+from . import satlogger
+from . import tester
 
 log = False
 timed = False
