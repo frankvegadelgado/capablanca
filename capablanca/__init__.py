@@ -1,4 +1,4 @@
 # CAPABLANCA package
 # Author: Frank Vega (vega.frank@gmail.com)
 
-import capablanca.satpy
+__all__ = ["satsolver", "z3solver", "reduction", "parser", "satlogger", "tester", "satpy"]

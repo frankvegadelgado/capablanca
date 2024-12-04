@@ -80,10 +80,10 @@ git clone https://github.com/frankvegadelgado/capablanca.git
 cd capablanca 
 ```
 
-On `capablanca\src\capablanca` directory run
+On `capablanca\capablanca` directory run
 
 ```
-python satpy.py -i ..\..\file.cnf
+python satpy.py -i ..\file.cnf
 ```
 
 Finally, the console output will display:
@@ -100,7 +100,7 @@ that means all positive variables are assigned the value "true" and negative val
 We can run the DIMACS files (with the .cnf extension) in the simplest benchmarks folder to output solutions for satisfiable formulas:
 
 ```
->  python satpy.py -i ..\..\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
+>  python satpy.py -i ..\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
 s SATISFIABLE
 v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46 48 -50 -49 -47 -45 -44 -37 -34 -33 -32 -29 -25 -16 -15 -13 -12 -11 -10 -6 -5 -4 -1 0
 ```
@@ -108,7 +108,7 @@ v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46
 and
 
 ```
-> python satpy.py -i ..\..\benchmarks\simplest\aim-50-1_6-no-1.cnf
+> python satpy.py -i ..\benchmarks\simplest\aim-50-1_6-no-1.cnf
 s UNSATISFIABLE
 ```
 
@@ -123,7 +123,7 @@ where these formulas were obtained from the well-known [SAT Benchmarks](https://
 
 # Command Options
 
-In the `capablanca\src\capablanca` directory, running the command:
+In the `capablanca\capablanca` directory, running the command:
 
 ```
 python satpy.py -h
@@ -154,7 +154,7 @@ where it is described all the possible options.
 # Complexity
 
 ````diff
-+ We effciently solve the Boolean Satisfiability (SAT) Problem.
++ We efficiently solve the Boolean Satisfiability (SAT) Problem.
 ````
  
 # License
