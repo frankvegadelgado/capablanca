@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>CAPABLANCA| SAT Solver</title>
+<title>CAPABLANCA</title>
 <style>
 body {
   background-color: black;
@@ -38,11 +38,11 @@ code.language-diff {background-color: while; color: green;}
 </li>
 </ul>
 <h2>Example</h2>
-<p>Instance: The Boolean formula $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ where $\vee$ (OR), $\wedge$ (AND) and $\rightharpoondown$ (NEGATION) are the logic operations.</p>
-<p>Answer: Satisfiable (the formula is satisfiable when we assign simultaneously all the variables as true to obtain a satisfying truth assignment).</p>
+<p>Instance: The Boolean formula $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations.</p>
+<p>Answer: Satisfiable. The formula is satisfiable when all variables are assigned the value &quot;true,&quot; resulting in a satisfying truth assignment.</p>
 <h2>Input of this project</h2>
 <p>The input is on <a href="http://www.satcompetition.org/2009/format-benchmarks2009.html">DIMACS</a> formula with the extension .cnf.</p>
-<p>The <strong>file.cnf</strong> on DIMACS format for $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ is</p>
+<p>The <strong>file.cnf</strong> on DIMACS format for $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ is</p>
 <pre><code>p cnf 4 2
 1 -3 -2 0
 3 2 4 0
@@ -52,7 +52,7 @@ code.language-diff {background-color: while; color: green;}
 <p>The first line <strong>p cnf 4 2</strong> means there are 4 variables and 2 clauses.</p>
 </li>
 <li>
-<p>The second line <strong>1 -3 -2 0</strong> means the clause $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2})$ (Note that, the number <em>0</em> means the end of the clause).</p>
+<p>The second line <strong>1 -3 -2 0</strong> means the clause $(x_{1} \vee \neg x_{3} \vee \neg x_{2})$ (Note that, the number <em>0</em> means the end of the clause).</p>
 </li>
 <li>
 <p>The third line <strong>3 2 4 0</strong> means the clause $(x_{3} \vee x_{2} \vee x_{4})$ (Note that, the number <em>0</em> means the end of the clause).</p>
@@ -74,34 +74,35 @@ cd capablanca
 <p>On capablanca directory run</p>
 <pre><code>python solver.py -i file.cnf
 </code></pre>
-<p>Finally, it would obtain in the console output:</p>
+<p>Finally, the console output will display:</p>
 <pre><code>s SATISFIABLE
+v 1 2 3 4 0
 </code></pre>
+<p>that means all variables are assigned the value &quot;true&quot; and negative values indicate a variable is assigned &quot;false&quot;.</p>
 <h1><strong>SAT Benchmarks</strong></h1>
-<p>We can run the DIMACS files with the extension .cnf in the simplest benchmarks folder:</p>
+<p>We can run the DIMACS files (with the .cnf extension) in the simplest benchmarks folder to output solutions for satisfiable formulas:</p>
 <pre><code>&gt;  python solver.py -i .\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
 s SATISFIABLE
+v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46 48 -50 -49 -47 -45 -44 -37 -34 -33 -32 -29 -25 -16 -15 -13 -12 -11 -10 -6 -5 -4 -1 0
 </code></pre>
 <p>and</p>
 <pre><code>&gt; python solver.py -i .\benchmarks\simplest\aim-50-1_6-no-1.cnf
 s UNSATISFIABLE
 </code></pre>
-<ul>
-<li>We run each script and output the solutions for the satisfiable formulas.</li>
-</ul>
-<p>We obtain this result since those files were copied into the directory capablanca\benchmarks\simplest:</p>
+<p>This result is obtained because those files were copied into the directory capablanca\benchmarks\simplest.</p>
 <pre><code>aim-50-1_6-yes1-1.cnf
 aim-50-1_6-no-1.cnf
 </code></pre>
-<p>from this well-known dataset <a href="https://www.cs.ubc.ca/~hoos/SATLIB/Benchmarks/SAT/DIMACS/AIM/descr.html">SAT Benchmarks</a>.</p>
+<p>where these formulas were obtained from the well-known <a href="https://www.cs.ubc.ca/~hoos/SATLIB/Benchmarks/SAT/DIMACS/AIM/descr.html">SAT Benchmarks</a> dataset.</p>
 <h1>Command Options</h1>
-<p>On capablanca directory if you run</p>
+<p>In the <code>capablanca</code> directory, running the command:</p>
 <pre><code>python solver.py -h
 </code></pre>
-<p>then you will obtain the following output</p>
+<p>will display the following help output:</p>
 <pre><code>usage: solver.py [-h] -i INPUTFILE [-v] [-t]
 
-Solve an NP-complete problem from a DIMACS file.
+Solve the Boolean Satisfiability (SAT) problem using a DIMACS file as input.
+
 
 options:
   -h, --help            show this help message and exit
@@ -116,8 +117,8 @@ options:
 <li>Python code by <strong>Frank Vega</strong>.</li>
 </ul>
 <h1>Complexity</h1>
-<pre><code class="language-diff">+ We solve this problem in polynomial time.
-+ Consequently, we deduce that P = NP.
+<pre><code class="language-diff">+ We solve the Boolean Satisfiability (SAT) problem in polynomial time.
++ Consequently, we show that P = NP.
 </code></pre>
 <h1>License</h1>
 <ul>

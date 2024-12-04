@@ -18,16 +18,16 @@ Question: Is $\phi$ satisfiable?
 Example
 ----- 
 
-Instance: The Boolean formula $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ where $\vee$ (OR), $\wedge$ (AND) and $\rightharpoondown$ (NEGATION) are the logic operations.
+Instance: The Boolean formula $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations.
 
-Answer: Satisfiable (the formula is satisfiable when we assign simultaneously all the variables as true to obtain a satisfying truth assignment).
+Answer: Satisfiable. The formula is satisfiable when all variables are assigned the value "true," resulting in a satisfying truth assignment.
 
 Input of this project
 -----
 
 The input is on [DIMACS](http://www.satcompetition.org/2009/format-benchmarks2009.html) formula with the extension .cnf.
   
-The **file.cnf** on DIMACS format for $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ is
+The **file.cnf** on DIMACS format for $(x_{1} \vee \neg x_{3} \vee \neg x_{2}) \wedge (x_{3} \vee x_{2} \vee x_{4})$ is
 ```  
 p cnf 4 2
 1 -3 -2 0
@@ -36,7 +36,7 @@ p cnf 4 2
 
 - The first line **p cnf 4 2** means there are 4 variables and 2 clauses.
 
-- The second line **1 -3 -2 0** means the clause $(x_{1} \vee \rightharpoondown x_{3} \vee \rightharpoondown x_{2})$ (Note that, the number *0* means the end of the clause).
+- The second line **1 -3 -2 0** means the clause $(x_{1} \vee \neg x_{3} \vee \neg x_{2})$ (Note that, the number *0* means the end of the clause).
 
 - The third line **3 2 4 0** means the clause $(x_{3} \vee x_{2} \vee x_{4})$ (Note that, the number *0* means the end of the clause).
 
@@ -71,19 +71,23 @@ On capablanca directory run
 python solver.py -i file.cnf
 ```
 
-Finally, it would obtain in the console output:
+Finally, the console output will display:
 
 ```
 s SATISFIABLE
+v 1 2 3 4 0
 ```
+
+that means all variables are assigned the value "true" and negative values indicate a variable is assigned "false".
 
 # **SAT Benchmarks** 
 
-We can run the DIMACS files with the extension .cnf in the simplest benchmarks folder:
+We can run the DIMACS files (with the .cnf extension) in the simplest benchmarks folder to output solutions for satisfiable formulas:
 
 ```
 >  python solver.py -i .\benchmarks\simplest\aim-50-1_6-yes1-1.cnf
 s SATISFIABLE
+v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46 48 -50 -49 -47 -45 -44 -37 -34 -33 -32 -29 -25 -16 -15 -13 -12 -11 -10 -6 -5 -4 -1 0
 ```
 
 and
@@ -93,31 +97,30 @@ and
 s UNSATISFIABLE
 ```
 
-- We run each script and output the solutions for the satisfiable formulas.
-
-We obtain this result since those files were copied into the directory capablanca\benchmarks\simplest:
+This result is obtained because those files were copied into the directory capablanca\benchmarks\simplest. 
 
 ```
 aim-50-1_6-yes1-1.cnf
 aim-50-1_6-no-1.cnf
 ```
 
-from this well-known dataset [SAT Benchmarks](https://www.cs.ubc.ca/~hoos/SATLIB/Benchmarks/SAT/DIMACS/AIM/descr.html). 
+where these formulas were obtained from the well-known [SAT Benchmarks](https://www.cs.ubc.ca/~hoos/SATLIB/Benchmarks/SAT/DIMACS/AIM/descr.html) dataset.
 
 # Command Options
 
-On capablanca directory if you run
+In the `capablanca` directory, running the command:
 
 ```
 python solver.py -h
 ```
 
-then you will obtain the following output
+will display the following help output:
 
 ```
 usage: solver.py [-h] -i INPUTFILE [-v] [-t]
 
-Solve an NP-complete problem from a DIMACS file.
+Solve the Boolean Satisfiability (SAT) problem using a DIMACS file as input.
+
 
 options:
   -h, --help            show this help message and exit
@@ -136,8 +139,8 @@ where it is described all the possible options.
 # Complexity
 
 ````diff
-+ We solve this problem in polynomial time.
-+ Consequently, we deduce that P = NP.
++ We solve the Boolean Satisfiability (SAT) problem in polynomial time.
++ Consequently, we shwo that P = NP.
 ````
  
 # License
