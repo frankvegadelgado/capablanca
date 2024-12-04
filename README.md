@@ -11,7 +11,7 @@ Question: Is $\phi$ satisfiable?
 
 # Research
 
-This work is based on the following published article: [On the P versus NP Problem](https://www.preprints.org/manuscript/202409.2053/v10).
+This work is based on the following published article: [On the P Versus NP Problem](https://www.preprints.org/manuscript/202409.2053/v10).
 
 # Theory
 
