@@ -1,5 +1,5 @@
 # CAPABLANCA| SAT Solver
-![](docs/capablanca.jpg)
+![](capablanca.jpg)
 
 # SAT Problem
 
