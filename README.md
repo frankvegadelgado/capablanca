@@ -49,7 +49,7 @@ p cnf 4 2
 Downloading and Installing
 -----
 
-Install Python >=3.6.
+Install Python >=3.8.
 
 Download and Install the NetworkX's Library version 3.3 and its dependencies 
 
