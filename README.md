@@ -1,5 +1,5 @@
 # CAPABLANCA| SAT Solver
-![](capablanca.jpg)
+![Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)](docs/capablanca.jpg)
 
 # SAT Problem
 
