@@ -97,7 +97,7 @@ pip install capablanca
    Run the following command to solve a sample `.cnf` file named `file.cnf` included with Capablanca's benchmarks:
 
    ```
-   python -m jaque -i benchmarks/simple/file.cnf
+   jaque -i benchmarks/simple/file.cnf
    ```
 
 Capablanca supports compressed `.cnf` files, including `.xz`, `.lzma`, `.bz2`, and `.bzip2` formats.
@@ -137,7 +137,7 @@ You can then use the `jaque` command to run the sample benchmarks. For example, 
 - Test the satisfiable formula `aim-50-1_6-yes1-1.cnf`:
 
   ```
-  python -m jaque -i benchmarks/file-dimacs-aim/aim-50-1_6-yes1-1.cnf
+  jaque -i benchmarks/file-dimacs-aim/aim-50-1_6-yes1-1.cnf
   s SATISFIABLE
   v 2 3 7 8 9 14 17 18 19 20 21 22 23 24 26 27 28 30 31 35 36 38 39 40 41 42 43 46 48 -50 -49 -47 -45 -44 -37 -34 -33 -32 -29 -25 -16 -15 -13 -12 -11 -10 -6 -5 -4 -1 0
   ```
@@ -147,7 +147,7 @@ A satisfiable formula means there exists a truth assignment that makes the formu
 - Test the unsatisfiable formula `aim-50-1_6-no-1.cnf`:
 
   ```
-  python -m jaque -i benchmarks/file-dimacs-aim/aim-50-1_6-no-1.cnf
+  jaque -i benchmarks/file-dimacs-aim/aim-50-1_6-no-1.cnf
   s UNSATISFIABLE
   ```
 
@@ -158,7 +158,7 @@ running these sample benchmarks, you can verify that Capablanca is functioning c
 To view the available command-line options for the `jaque` command, use the following command in your terminal or command prompt:
 
 ```
-python -m jaque -h
+jaque -h
 ```
 
 This will display the help message, which provides information about the available options and their usage:
