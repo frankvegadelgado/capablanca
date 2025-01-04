@@ -84,7 +84,7 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, unzip=False, br
     if timed:
         started = time.time()
         
-    satisfiability, answer = z3solver.solve_brute_force(solver, formula, max_variable) if (brute_force) else z3solver.solve(solver, formula, max_variable)
+    satisfiability, answer = z3solver.solve(solver, formula, max_variable)
     
     if timed:
         started = (time.time() - started) * 1000.0

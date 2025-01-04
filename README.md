@@ -23,7 +23,7 @@ The Boolean Satisfiability Problem (SAT) is a fundamental problem in computer sc
 
 **Example:**
 
-Consider the formula $(x_1 \vee ¬x_3 \vee ¬x_2) \wedge (x_3 \vee x_2 \vee x_4)$, where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations. This formula is in CNF with four variables ($x_1$, $x_2$, $x_3$, and $x_4$) and two clauses. A possible satisfying truth assignment is {$x_1$: True, $x_2$: True, $x_3$: True, $x_4$: True}.
+Consider the formula $(x_1 \vee ¬x_3 \vee ¬x_2) \wedge (x_3 \vee x_2 \vee x_4)$, where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations. This formula is in CNF with four variables ($x_1$, $x_2$, $x_3$, and $x_4$) and two clauses. A possible satisfying truth assignment is ($x_1$: True, $x_2$: True, $x_3$: True, and $x_4$: True).
 
 **Input format:**
 
