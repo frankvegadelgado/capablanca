@@ -2,7 +2,7 @@ from pathlib import Path
 
 import setuptools
 
-VERSION = "1.1"
+VERSION = "1.2"
 
 NAME = "capablanca"
 
@@ -40,7 +40,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     entry_points={
         'console_scripts': [
-            'jaque = capablanca.satpy:main'
+            'jaque = capablanca.app:main'
         ]
     }
 )

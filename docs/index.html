@@ -13,7 +13,7 @@
       }
       code.language-diff {
         background-color: while;
-        color: red;
+        color: green;
       }
     </style>
     <script type="text/x-mathjax-config">
@@ -32,12 +32,19 @@
     ></script>
   </head>
   <body>
-    <h1>CAPABLANCA-SAT Solver</h1>
+    <h1>SAT Solver</h1>
     <p>
       <img
         src="capablanca.jpg"
-        alt="Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)"
+        alt="Honoring the Memory of Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)"
       />
+    </p>
+    <p>
+      This work builds upon
+      <a
+        href="https://www.researchgate.net/publication/387727103_SAT_in_Logarithmic_Space_A_Proof_of_P_NP"
+        >SAT in Polynomial Time: A Proof of P = NP</a
+      >.
     </p>
     <h1>Boolean Satisfiability (SAT) Problem</h1>
     <p>
@@ -362,7 +369,8 @@ options:
       <li><strong>Author:</strong> Frank Vega</li>
     </ul>
     <h2>Complexity</h2>
-    <pre><code class="language-diff">- The current implementation of the SAT solver likely uses a brute-force approach, which can be computationally expensive for larger and more complex problems.
+    <pre><code class="language-diff">+ The current implementation of the SAT solver achieves significant performance gains by avoiding a brute-force approach.
++ This allows it to tackle problems that would otherwise be computationally prohibitive.
 </code></pre>
     <h2>License</h2>
     <p>This code is released under the MIT License.</p>

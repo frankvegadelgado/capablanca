@@ -1,6 +1,8 @@
-# CAPABLANCA-SAT Solver
+# SAT Solver
 
-![Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)](docs/capablanca.jpg)
+![Honoring the Memory of Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)](docs/capablanca.jpg)
+
+This work builds upon [SAT in Polynomial Time: A Proof of P = NP](https://www.researchgate.net/publication/387727103_SAT_in_Logarithmic_Space_A_Proof_of_P_NP).
 
 # Boolean Satisfiability (SAT) Problem
 
@@ -197,7 +199,8 @@ By using these command-line options, you can customize the behavior of the `jaqu
 ## Complexity
 
 ```diff
-- The current implementation of the SAT solver likely uses a brute-force approach, which can be computationally expensive for larger and more complex problems.
++ The current implementation of the SAT solver achieves significant performance gains by avoiding a brute-force approach.
++ This allows it to tackle problems that would otherwise be computationally prohibitive.
 ```
 
 ## License
