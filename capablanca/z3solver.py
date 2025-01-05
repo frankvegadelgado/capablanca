@@ -6,33 +6,6 @@ z3.set_param("parallel.enable", False)
 
 from . import utils
 
-def build_brute_force(clauses):
-    """Builds a Z3 solver instance with constraints corresponding to the given clauses.
-
-    Args:
-        clauses: A list of clauses, where each clause is a list of literals.
-    
-    Returns:
-        A Z3 solver instance (Exponential 3SAT Solver).
-    """
-    
-    variables = utils.convert_to_absolute_value_set(clauses) # Set of all variables
-
-    s = z3.Solver()
-    smt2 = [('(declare-fun |%s| () Bool)' % variable) for variable in variables]
-
-    for clause in clauses:
-        x = '(not |%s|)' % (-clause[0]) if (clause[0] < 0) else '|%s|' % clause[0]
-        y = '(not |%s|)' % (-clause[1]) if (clause[1] < 0) else '|%s|' % clause[1]
-        z = '(not |%s|)' % (-clause[2]) if (clause[2] < 0) else '|%s|' % clause[2]
-        smt2.append('(assert (or %s (or %s %s)))' % (x, y, z))
-
-    smt2.append('(check-sat)')
-    s.from_string("%s" % '\n'.join(smt2))
-    
-    return s
-
-
 def build(clauses):
     """Builds a Z3 solver instance with constraints corresponding to the given clauses.
 
@@ -40,7 +13,7 @@ def build(clauses):
         clauses: A list of clauses, where each clause is a list of literals.
     
     Returns:
-        A Z3 solver instance (Polynomial-time XOR-SAT Solver).
+        A Z3 solver instance (Feasible SAT Solver).
     """
     
     variables = utils.convert_to_absolute_value_set(clauses) # Set of all variables
@@ -48,25 +21,29 @@ def build(clauses):
     s = z3.Solver()
     smt2 = [('(declare-fun |%s| () Bool)' % variable) for variable in variables]
 
-    for clause in clauses:
-        x = '(not |%s|)' % (-clause[0]) if (clause[0] < 0) else '|%s|' % clause[0]
-        y = '(not |%s|)' % (-clause[1]) if (clause[1] < 0) else '|%s|' % clause[1]
-        if len(clause) == 2:
-            smt2.append('(assert (xor %s %s))' % (x, y))
-            continue    
-        z = '(not |%s|)' % (-clause[2]) if (clause[2] < 0) else '|%s|' % clause[2]
-        if len(clause) == 3:
-            smt2.append('(assert (xor %s (xor %s %s)))' % (x, y, z))
+    for original_clause in clauses:
+        negated_literals = []
+        set_clause = set(original_clause)
+        clause = list(set_clause)
+        tautology = False
+        for x in clause:
+            if -x not in set_clause:
+                negated_literals.append('|%s|' % -x if (x < 0) else '(not |%s|)' % x)
+            else:
+                tautology = True
+                break
+        if tautology:
             continue
-        w = '(not |%s|)' % (-clause[3]) if (clause[3] < 0) else '|%s|' % clause[3]
-        smt2.append('(assert (xor (xor %s %s) (xor %s %s)))' % (x, y, z, w))
-        
+        else:        
+            smt2.append('(assert (ite (and %s) false true))' % ' '.join(negated_literals))
+
     smt2.append('(check-sat)')
     s.from_string("%s" % '\n'.join(smt2))
+    
     return s
 
 def solve(solver, formula, max_variable):
-    """Solves the formula represented by the Z3 solver and return the result.
+    """Solves feasible the formula represented by the Z3 solver and return the result.
 
     Args:
         solver: A Z3 solver instance containing the formula.
@@ -88,11 +65,10 @@ def solve(solver, formula, max_variable):
         model = solver.model()
         for d in model.decls():
             literal = int(d.name())
-            variable = literal // 2
+            variable = abs(literal)
             if variable <= max_variable:
                 value = ('%s' % model[d])
                 visited[variable] = True
-                literal = variable if (literal % 2 == 0) else -variable
                 if value == 'False': 
                     solution.add(-literal)
                 else:
@@ -107,5 +83,4 @@ def solve(solver, formula, max_variable):
     
         return True, solution 
     else: 
-        return None, None 
-    
+        return None, None     

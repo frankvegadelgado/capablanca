@@ -1,5 +1,3 @@
-from . import utils
-
 def reduce_sat_to_3sat(clauses, max_variable):
     """Converts a formula in SAT format to a 3CNF formula.
 
@@ -51,76 +49,6 @@ def reduce_sat_to_3sat(clauses, max_variable):
 
     return three_sat_clauses, next_variable - 1
 
-def reduce_3sat_to_1_in_3_3msat(clauses, max_variable):
-    """
-    Converts a 3SAT formula to a monotone 1-IN-3-3SAT instance.
-
-    Args:
-        clauses: A list of 3CNF clauses.
-        max_variable: The maximum variable in the input formula.
-
-    Returns: A tuple (one_in_three_clauses, new_max_variable), where:
-            - one_in_three_clauses: A list of monotone 1-IN-3-3SAT clauses.
-            - new_max_variable: The maximum variable in the new 3CNF formula.
-    """
-
-    one_in_three_clauses = []
-    next_variable = 2 * max_variable + 2
-    
-    variables = utils.convert_to_absolute_value_set(clauses) # Set of all variables
-
-    for variable in variables: # Keep consistency between x and ¬x
-        positive_literal = utils.double(variable) # Map variable to 2 * variable
-        negative_literal = utils.double(-variable)  # Map =variable to 2 * variable + 1
-
-        new_var = next_variable
-        one_in_three_clauses.extend([[positive_literal, negative_literal, new_var],
-                         [positive_literal, negative_literal, new_var + 1],
-                         [new_var, new_var + 1, new_var + 2]])
-        next_variable += 3
-    
-    for clause in clauses: # Classic reduction from 3SAT to 1-IN-3-3SAT 
-        # We map literals to positive variables
-        x, y, z = utils.double(-clause[0]), utils.double(clause[1]), utils.double(-clause[2])
-        # Auxiliary variables
-        a, b, d, e = next_variable, next_variable + 1, next_variable + 2, next_variable + 3 
-        # monotone 1-IN-3-3SAT clauses
-        one_in_three_clauses.extend([[x, a, b], [y, b, d], [z, d, e]])
-        next_variable += 4
-    
-    return one_in_three_clauses, next_variable - 1    
-
-
-def reduce1_1_in_3_3msat_to_xor_sat(clauses, max_variable):
-    """Converts a monotone 1-IN-3-3SAT formula to a XOR-SAT formula.
-
-    Args:
-        clauses: A list of clauses, where each clause is a list of three distinct literals.
-        max_variable: The maximum variable in the input formula.
-
-    Returns:
-        A list of XOR CNF clauses.
-    """
-
-    xor_clauses = []
-    next_variable = max_variable + 1
-
-    for clause in clauses:
-        x, y, z = clause[0], clause[1], clause[2]
-        # Auxiliary variables
-        a_x, b_x = next_variable, next_variable + 1
-        d_y, e_y = next_variable + 2, next_variable + 3
-        f_z, g_z = next_variable + 4, next_variable + 5
-        next_variable += 6    
-        # F_i formula
-        F_i = [[-x, y], [-y, z], [-z, x]]
-        # E_i formula
-        E_i = [[x, y, z], [x, y, z, a_x]]
-        # F_i AND E_i
-        xor_clauses.extend(F_i + E_i)
-
-    return xor_clauses
-
 def reduce_cnf_to_3sat(clauses, max_variable):
     """Reduces a CNF formula to a 3SAT instance.
 
@@ -133,33 +61,6 @@ def reduce_cnf_to_3sat(clauses, max_variable):
     """
 
     # Convert the CNF formula to 3SAT
-    three_sat_clauses, new_max_variable = reduce_sat_to_3sat(clauses, max_variable)
+    three_sat_clauses, _ = reduce_sat_to_3sat(clauses, max_variable)
 
-    # Convert the 3SAT instance to mock 3SAT formula
-    mock_three_sat_clauses = utils.reduce_3sat_to_mock_3sat(three_sat_clauses, new_max_variable)
-
-    return mock_three_sat_clauses
-
-def reduce_cnf_to_xor_sat(clauses, max_variable):
-    """Reduces a CNF formula to a XOR-SAT instance.
-
-    Args:
-        clauses: A list of clauses in CNF form.
-        max_variable: The maximum variable in the CNF formula.
-
-    Returns:
-        A list of XOR CNF clauses.
-    """
-
-    # Convert the CNF formula to 3SAT
-    three_sat_clauses, new_max_variable = reduce_sat_to_3sat(clauses, max_variable)
-    
-    # Convert the 3SAT instance to monotone 1-IN-3 3SAT formula
-    one_in_three_clauses, new_max_variable = reduce_3sat_to_1_in_3_3msat(three_sat_clauses, new_max_variable)
-
-    # Convert the monotone 1-IN-3 3SAT instance to XOR-SAT formula
-    xor_clauses = reduce1_1_in_3_3msat_to_xor_sat(one_in_three_clauses, new_max_variable)
-    
-    return xor_clauses
-
-
+    return three_sat_clauses

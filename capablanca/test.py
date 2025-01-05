@@ -1,17 +1,16 @@
-# Created on 12/27/2024
+# Created on 01/05/2025
 # Author: Frank Vega
 
 from . import app
 
-def sat_solver_tests(total, logging=False, exponential_algorithm=False):
+def sat_solver_tests(total, logging=False):
 
     # Run all sat solver test cases
     for i in range(total):
         print(f"Test: formula{i}.cnf")
         app.sat_solver(f'test_formulas/formula{i}.cnf', 
                          verbose=logging, 
-                         timed=logging,
-                         brute_force=exponential_algorithm)
+                         timed=logging)
 
 # Run Tests
-sat_solver_tests(total=4, logging=False, exponential_algorithm=True)
+sat_solver_tests(total=4, logging=False)

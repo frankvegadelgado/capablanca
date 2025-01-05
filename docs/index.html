@@ -93,7 +93,7 @@
       x_4)$, where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the
       logic operations. This formula is in CNF with four variables ($x_1$,
       $x_2$, $x_3$, and $x_4$) and two clauses. A possible satisfying truth
-      assignment is ($x_1$: True, $x_2$: True, $x_3$: True, and $x_4$: True).
+      assignment is ($x_1$: False, $x_2$: False, $x_3$: True, and $x_4$: False).
     </p>
     <p><strong>Input format:</strong></p>
     <p>
@@ -243,7 +243,7 @@
     <p><strong>Output Interpretation:</strong></p>
     <h2>If the formula is satisfiable, the console output will display:</h2>
     <pre><code>s SATISFIABLE
-v 1 2 3 4 0
+v 3 -4 -1 -2 0
 </code></pre>
     <ul>
       <li>
@@ -252,13 +252,17 @@ v 1 2 3 4 0
         formula.
       </li>
       <li>
-        <strong><code>v 1 2 3 4 0</code>:</strong> This line provides the
+        <strong><code>v 3 -4 -1 -2 0</code>:</strong> This line provides the
         satisfying truth assignment.
         <ul>
           <li>
-            Positive numbers (e.g., <code>1</code>, <code>2</code>,
-            <code>3</code>, <code>4</code>) represent variables assigned the
-            value &quot;True.&quot;
+            Positive numbers (e.g., <code>3</code>) represent variables assigned
+            the value &quot;True&quot;.
+          </li>
+          <li>
+            Negative numbers (e.g., <code>-1</code>, <code>-2</code>,
+            <code>-4</code>) represent variables assigned the value
+            &quot;False&quot;.
           </li>
           <li><code>0</code> marks the end of the truth assignment.</li>
         </ul>
@@ -338,7 +342,7 @@ s UNSATISFIABLE
       This will display the help message, which provides information about the
       available options and their usage:
     </p>
-    <pre><code>usage: jaque [-h] -i INPUTFILE [-v] [-t] [-l] [-u]
+    <pre><code>usage: jaque [-h] -i INPUTFILE [-v] [-t] [-l]
 
 Solve the Boolean Satisfiability (SAT) problem using a DIMACS file as input.
 
@@ -349,7 +353,6 @@ options:
   -v, --verbose         Enable verbose output
   -t, --timer           Enable timer output
   -l, --log             Enable file logging
-  -u, --unzip           Unzip file input
 </code></pre>
     <p>Available Options:</p>
     <pre><code>-h, --help: Displays this help message and exits the program.
@@ -357,7 +360,6 @@ options:
 -v, --verbose: Enables verbose output, providing more detailed information about the solver's progress.
 -t, --timer: Enables timer output, displaying the time taken by the solver to find a solution.
 -l, --log: Enables file logging, writing detailed information about the solver's execution to a log file.
--u, --unzip: Unzip compressed input files before processing.
 </code></pre>
     <p>
       By using these command-line options, you can customize the behavior of the
@@ -369,8 +371,7 @@ options:
       <li><strong>Author:</strong> Frank Vega</li>
     </ul>
     <h2>Complexity</h2>
-    <pre><code class="language-diff">+ The current implementation of the SAT solver achieves significant performance gains by avoiding a brute-force approach.
-+ This allows it to tackle problems that would otherwise be computationally prohibitive.
+    <pre><code class="language-diff">+ The current implementation of the SAT solver achieves significant performance.
 </code></pre>
     <h2>License</h2>
     <p>This code is released under the MIT License.</p>

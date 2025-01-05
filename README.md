@@ -23,7 +23,7 @@ The Boolean Satisfiability Problem (SAT) is a fundamental problem in computer sc
 
 **Example:**
 
-Consider the formula $(x_1 \vee ¬x_3 \vee ¬x_2) \wedge (x_3 \vee x_2 \vee x_4)$, where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations. This formula is in CNF with four variables ($x_1$, $x_2$, $x_3$, and $x_4$) and two clauses. A possible satisfying truth assignment is ($x_1$: True, $x_2$: True, $x_3$: True, and $x_4$: True).
+Consider the formula $(x_1 \vee ¬x_3 \vee ¬x_2) \wedge (x_3 \vee x_2 \vee x_4)$, where $\vee$ (OR), $\wedge$ (AND) and $\neg$ (NEGATION) are the logic operations. This formula is in CNF with four variables ($x_1$, $x_2$, $x_3$, and $x_4$) and two clauses. A possible satisfying truth assignment is ($x_1$: False, $x_2$: False, $x_3$: True, and $x_4$: False).
 
 **Input format:**
 
@@ -110,12 +110,13 @@ Capablanca supports compressed `.cnf` files, including `.xz`, `.lzma`, `.bz2`, a
 
 ```
 s SATISFIABLE
-v 1 2 3 4 0
+v 3 -4 -1 -2 0
 ```
 
 - **`s SATISFIABLE`:** This line indicates that the SAT solver found a satisfying truth assignment for the given formula.
-- **`v 1 2 3 4 0`:** This line provides the satisfying truth assignment.
-  - Positive numbers (e.g., `1`, `2`, `3`, `4`) represent variables assigned the value "True."
+- **`v 3 -4 -1 -2 0`:** This line provides the satisfying truth assignment.
+  - Positive numbers (e.g., `3`) represent variables assigned the value "True".
+  - Negative numbers (e.g., `-1`, `-2`, `-4`) represent variables assigned the value "False".
   - `0` marks the end of the truth assignment.
 
 ## If the formula is unsatisfiable, the console output will display:
@@ -166,7 +167,7 @@ jaque -h
 This will display the help message, which provides information about the available options and their usage:
 
 ```
-usage: jaque [-h] -i INPUTFILE [-v] [-t] [-l] [-u]
+usage: jaque [-h] -i INPUTFILE [-v] [-t] [-l]
 
 Solve the Boolean Satisfiability (SAT) problem using a DIMACS file as input.
 
@@ -177,7 +178,6 @@ options:
   -v, --verbose         Enable verbose output
   -t, --timer           Enable timer output
   -l, --log             Enable file logging
-  -u, --unzip           Unzip file input
 ```
 
 Available Options:
@@ -187,7 +187,6 @@ Available Options:
     -v, --verbose: Enables verbose output, providing more detailed information about the solver's progress.
     -t, --timer: Enables timer output, displaying the time taken by the solver to find a solution.
     -l, --log: Enables file logging, writing detailed information about the solver's execution to a log file.
-    -u, --unzip: Unzip compressed input files before processing.
 
 By using these command-line options, you can customize the behavior of the `jaque` command to suit your specific needs.
 
@@ -199,8 +198,7 @@ By using these command-line options, you can customize the behavior of the `jaqu
 ## Complexity
 
 ```diff
-+ The current implementation of the SAT solver achieves significant performance gains by avoiding a brute-force approach.
-+ This allows it to tackle problems that would otherwise be computationally prohibitive.
++ The current implementation of the SAT solver achieves significant performance.
 ```
 
 ## License

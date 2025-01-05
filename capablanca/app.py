@@ -1,12 +1,11 @@
 #                          SAT Solver
 #                          CAPABLANCA
 #                          Frank Vega
-#                      December 27th, 2024
+#                      January 5th, 2025
 
 import argparse
 import time
 
-from . import reduction
 from . import parser
 from . import applogger
 from . import z3solver
@@ -23,7 +22,7 @@ def output(msg, use_logs):
     else:
         print(msg)
     
-def sat_solver(inputFile, verbose=False, timed=False, log=False, unzip=False, brute_force=False):
+def sat_solver(inputFile, verbose=False, timed=False, log=False):
     """Solves a CNF formula.
 
     Args:
@@ -32,7 +31,6 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, unzip=False, br
         timed: Enable timer output.
         log: Enable file logging.
         unzip: Unzip file input.
-        brute_force: True (Exponential Solution), False (Feasible Solution)
     """
     
     global logger
@@ -45,7 +43,7 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, unzip=False, br
     if timed:
         started = time.time()
     
-    formula, max_variable = parser.read(inputFile, not unzip)
+    formula, max_variable = parser.read(inputFile)
     
     if timed:
         started = (time.time() - started) * 1000.0
@@ -53,25 +51,12 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, unzip=False, br
     else:
         println("Pre-processing done")
     
-    # Polynomial Time Reduction
-    println("Reducing the problem started")
-    if timed:
-        started = time.time()
-    
-    new_clauses = reduction.reduce_cnf_to_3sat(formula, max_variable) if (brute_force) else reduction.reduce_cnf_to_xor_sat(formula, max_variable)
-    
-    if timed:
-        started = (time.time() - started) * 1000.0
-        println("Reducing the problem done in: " + str(started) + " milliseconds")
-    else:
-        println("Reducing the problem done")
-
     # Creating the Boolean Formula
     println("Creating data structure started")
     if timed:
         started = time.time()
         
-    solver = z3solver.build_brute_force(new_clauses) if (brute_force) else z3solver.build(new_clauses)
+    solver = z3solver.build(formula)
     
     if timed:
         started = (time.time() - started) * 1000.0
@@ -105,16 +90,13 @@ def main():
     helper.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output')
     helper.add_argument('-t', '--timer', action='store_true', help='Enable timer output')
     helper.add_argument('-l', '--log', action='store_true', help='Enable file logging')
-    helper.add_argument('-u', '--unzip', action='store_true', help='Unzip file input')
     
     # Initialize the parameters
     args = helper.parse_args()
     sat_solver(args.inputFile, 
                verbose=args.verbose, 
                timed=args.timer, 
-               log=args.log,
-               unzip=args.unzip,
-               brute_force=True)
+               log=args.log)
 
 if __name__ == "__main__":
     main()

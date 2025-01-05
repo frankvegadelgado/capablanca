@@ -25,13 +25,12 @@ def dimacs(lines):
 
     return clauses, max_variable
 
-def read(filepath, ignore):
+def read(filepath):
     """Reads a file and returns its lines in DIMACS format.
 
     Args:
         filepath: The path to the file.
-        ignore: Ignore extension file
-
+    
     Returns:
         A list of lines in DIMACS format.
 
@@ -41,22 +40,18 @@ def read(filepath, ignore):
     """
 
     try:
-        if ignore:
+        extension = utils.get_extension_without_dot(filepath)
+        if extension is None or extension == 'cnf':
             with open(filepath, 'r') as file:
                 lines = file.readlines()
+        elif extension == 'xz' or extension == 'lzma':
+            with lzma.open(filepath, 'rt') as file:
+                lines = file.readlines()
+        elif extension == 'bz2' or extension == 'bzip2':
+            with bz2.open(filepath, 'rt') as file:
+                lines = file.readlines()
         else:
-            extension = utils.get_extension_without_dot(filepath)
-            if extension == 'cnf':
-                with open(filepath, 'r') as file:
-                    lines = file.readlines()
-            elif extension == 'xz' or extension == 'lzma':
-                with lzma.open(filepath, 'rt') as file:
-                    lines = file.readlines()
-            elif extension == 'bz2' or extension == 'bzip2':
-                with bz2.open(filepath, 'rt') as file:
-                    lines = file.readlines()
-            else:
-                raise ValueError("Unsupported compressed file extension: " + str(extension))
+            raise ValueError("Unsupported compressed file extension: " + str(extension))
 
         return dimacs(lines)
     except FileNotFoundError:

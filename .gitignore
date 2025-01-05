@@ -166,3 +166,4 @@ benchmarks/sat22
 benchmarks/sat23
 benchmarks/sat24
 app.log
+deploy/
