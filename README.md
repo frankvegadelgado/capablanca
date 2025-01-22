@@ -222,7 +222,8 @@ options:
 ## Complexity
 
 ```diff
-+ The current implementation of the SAT solver achieves significant performance.
++ The current brute force implementation of the SAT solver achieves significant performance.
+- This version can be used as standard code to implement the polynomial-time solution using Documentation Research.
 ```
 
 ## License
