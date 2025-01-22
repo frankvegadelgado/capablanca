@@ -223,7 +223,8 @@ options:
 
 ```diff
 + The current brute force implementation of the SAT solver achieves significant performance.
-- This version can be used as standard code to implement the polynomial-time solution using Documentation Research.
+- The current polynomial-time implementation of the SAT solver has not been completed: the algorithm for solving the maximum independent set problem on line graphs is still missing.
++ This version can be used as standard code to implement the polynomial-time solution using Documentation Research.
 ```
 
 ## License

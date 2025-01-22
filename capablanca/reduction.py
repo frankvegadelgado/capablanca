@@ -187,7 +187,6 @@ def reduce_2mxsat_to_3xsp(clauses, max_variable):
                         end = v
                         next_variable += 3         
                 variable_sets.append(frozenset({-start, end, original}))
-                #print(variable_sets)
                 sets.extend(variable_sets)
                 
 
@@ -199,38 +198,58 @@ def reduce_2mxsat_to_3xsp(clauses, max_variable):
                        frozenset({y, b, d}), 
                        frozenset({-y, e, d}), 
                        frozenset({-x, e, a})]
-        #print(clause_sets)
         sets.extend(clause_sets)
         next_variable += 4
         
     return sets
 
-def reduce_cnf_to_3xsp(clauses, max_variable):
-    """Reduces a CNF formula to a 3XSP instance.
+def reduce_3xsp_to_2xhs(sets_3xsp):
+    """Reduces 3XSP sets to a 2XHS instance.
+
+    Args:
+        sets_3xsp: A list of 3-element sets.
+    
+    Returns: 
+        - A list of 2-element sets.
+    """
+
+    sets = []
+    for key1, subset1 in enumerate(sets_3xsp):
+        for key2, subset2 in enumerate(sets_3xsp):
+            if key1 < key2 and subset1.intersection(subset2):
+                sets.append(frozenset({key1, key2}))
+
+    return sets    
+
+
+def reduce_cnf_to_2xhs(clauses, max_variable):
+    """Reduces a CNF formula to a 2XHS instance.
 
     Args:
         clauses: A list of clauses in CNF form.
         max_variable: The maximum variable in the CNF formula.
     
-    Returns: A tuple (sets_3xsp, k), where:
-        - sets_3xsp: A list of 3-element sets.
+    Returns: A tuple (sets_2xhs, k), where:
+        - sets_2xhs: A list of 2-element sets.
         - k: The target.
     """
 
     # Convert the simplified CNF formula to 3SAT
     cnf_3sat_clauses, next_variable = reduce_sat_to_3sat(clauses, max_variable)
-    # print(cnf_3sat_clauses)
+    
     # Convert the 3SAT formula to NAE-3SAT
     nae_3sat_clauses, next_variable = reduce_3sat_to_nae_3sat(cnf_3sat_clauses, next_variable)
-    #print(nae_3sat_clauses)
+    
     # Convert the NAE-3SAT formula to monotone NAE-3SAT
     nae_3msat_clauses, next_variable = reduce_nae_3sat_to_nae_3msat(nae_3sat_clauses, next_variable)
-    #print(nae_3msat_clauses)
+    
     # Convert the monotone NAE-3SAT formula to 2MXSAT
     mxsat_clauses, next_variable = reduce_nae_3msat_to_2mxsat(nae_3msat_clauses, next_variable)
-    #print(mxsat_clauses)
+    
     # Convert a 2MXSAT to a 3XSP sets
     sets_3xsp = reduce_2mxsat_to_3xsp(mxsat_clauses, next_variable)
-    #print(f"m={len(mxsat_clauses)}")
-    #print(f"k={5 * len(mxsat_clauses) // 6}")
-    return sets_3xsp, 3 * len(mxsat_clauses) + 5 * len(mxsat_clauses) // 6  
+    
+    # Convert a 3XSP to a 2XHS sets
+    sets_2xhs = reduce_3xsp_to_2xhs(sets_3xsp)
+    
+    return sets_2xhs, 3 * len(mxsat_clauses) + 5 * len(mxsat_clauses) // 6  

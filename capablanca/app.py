@@ -51,7 +51,7 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, bruteForce=Fals
     if bruteForce:
         new_formula = formula
     else:
-        sets, k = reduction.reduce_cnf_to_3xsp(formula, max_variable)
+        sets, k = reduction.reduce_cnf_to_2xhs(formula, max_variable)
     
     if timed:
         utils.println(f"Polynomial-time reduction done in: {(time.time() - started) * 1000.0} milliseconds", logger)
@@ -68,12 +68,11 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, bruteForce=Fals
     if bruteForce:
         solver = z3solver.build(new_formula)
     else:
+        # Wrong reduction to maximum independent set in line graphs
         G = nx.Graph()
-        for key1, subset1 in enumerate(sets):
-            for key2, subset2 in enumerate(sets):
-                if key1 < key2 and subset1.intersection(subset2):
-                    G.add_edge(key1, key2)
-            
+        iterators = [iter(subset) for subset in sets]
+        edges = [(next(elements), next(elements)) for elements in iterators]
+        G.add_edges_from(edges)     
         
     if timed:
         utils.println(f"Creating data structure done in: {(time.time() - started) * 1000.0} milliseconds", logger)
@@ -122,7 +121,7 @@ def main():
     helper.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output')
     helper.add_argument('-t', '--timer', action='store_true', help='Enable timer output')
     helper.add_argument('-l', '--log', action='store_true', help='Enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 1.3')
+    helper.add_argument('--version', action='version', version='%(prog)s 1.4')
     
     # Initialize the parameters
     args = helper.parse_args()
