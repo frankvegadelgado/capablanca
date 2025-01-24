@@ -2,13 +2,14 @@ from pathlib import Path
 
 import setuptools
 
-VERSION = "1.4"
+VERSION = "1.5"
 
 NAME = "capablanca"
 
 INSTALL_REQUIRES = [
     "networkx[default]>=3.4.2",  
     "z3-solver>=4.13.4.0",
+    "PuLP>=2.9.0"
 ]
 
 setuptools.setup(

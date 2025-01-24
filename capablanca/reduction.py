@@ -1,3 +1,5 @@
+import networkx as nx
+
 from . import utils
 
 def reduce_sat_to_3sat(clauses, max_variable):
@@ -210,16 +212,16 @@ def reduce_3xsp_to_2xhs(sets_3xsp):
         sets_3xsp: A list of 3-element sets.
     
     Returns: 
-        - A list of 2-element sets.
+        - A line graph.
     """
 
-    sets = []
+    G = nx.Graph()
     for key1, subset1 in enumerate(sets_3xsp):
         for key2, subset2 in enumerate(sets_3xsp):
             if key1 < key2 and subset1.intersection(subset2):
-                sets.append(frozenset({key1, key2}))
+                G.add_edge(key1, key2)
 
-    return sets    
+    return G    
 
 
 def reduce_cnf_to_2xhs(clauses, max_variable):
@@ -229,8 +231,8 @@ def reduce_cnf_to_2xhs(clauses, max_variable):
         clauses: A list of clauses in CNF form.
         max_variable: The maximum variable in the CNF formula.
     
-    Returns: A tuple (sets_2xhs, k), where:
-        - sets_2xhs: A list of 2-element sets.
+    Returns: A tuple (G, k), where:
+        - G: A line graph.
         - k: The target.
     """
 
@@ -249,7 +251,7 @@ def reduce_cnf_to_2xhs(clauses, max_variable):
     # Convert a 2MXSAT to a 3XSP sets
     sets_3xsp = reduce_2mxsat_to_3xsp(mxsat_clauses, next_variable)
     
-    # Convert a 3XSP to a 2XHS sets
-    sets_2xhs = reduce_3xsp_to_2xhs(sets_3xsp)
+    # Convert a 3XSP to a line graph that represents the 2XHS sets
+    G = reduce_3xsp_to_2xhs(sets_3xsp)
     
-    return sets_2xhs, 3 * len(mxsat_clauses) + 5 * len(mxsat_clauses) // 6  
+    return G, 3 * len(mxsat_clauses) + 5 * len(mxsat_clauses) // 6  

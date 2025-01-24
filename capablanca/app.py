@@ -7,6 +7,7 @@ import argparse
 import time
 import networkx as nx
 import z3
+import pulp
 
 from . import reduction
 from . import parser
@@ -45,13 +46,13 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, bruteForce=Fals
     if timed:
         started = time.time()
     
-    new_formula, sets, k = None, None, None
+    new_formula, line_graph, k = None, None, None
     # brute force
 
     if bruteForce:
         new_formula = formula
     else:
-        sets, k = reduction.reduce_cnf_to_2xhs(formula, max_variable)
+        line_graph, k = reduction.reduce_cnf_to_2xhs(formula, max_variable)
     
     if timed:
         utils.println(f"Polynomial-time reduction done in: {(time.time() - started) * 1000.0} milliseconds", logger)
@@ -63,17 +64,24 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, bruteForce=Fals
     if timed:
         started = time.time()
 
-    G, solver = None, None     
+    prob, solver = None, None     
 
     if bruteForce:
         solver = z3solver.build(new_formula)
     else:
-        # Wrong reduction to maximum independent set in line graphs
-        G = nx.Graph()
-        iterators = [iter(subset) for subset in sets]
-        edges = [(next(elements), next(elements)) for elements in iterators]
-        G.add_edges_from(edges)     
-        
+        # Create a Linear Programming problem
+        prob = pulp.LpProblem("MaximumIndependentSet", pulp.LpMaximize)
+
+        # Create binary decision variables for each node in the line graph
+        x = {node: pulp.LpVariable(f"x_{node}", cat="Binary") for node in line_graph.nodes}
+
+        # Objective: Maximize the sum of selected nodes
+        prob += pulp.lpSum(x[node] for node in line_graph.nodes), "MaximizeNumberOfSelectedEdges"
+
+        # Constraints: For each edge in the line graph, ensure at most one endpoint is selected
+        for u, v in line_graph.edges:
+            prob += x[u] + x[v] <= 1, f"Conflict_{u}_{v}"
+
     if timed:
         utils.println(f"Creating data structure done in: {(time.time() - started) * 1000.0} milliseconds", logger)
     else:
@@ -94,12 +102,15 @@ def sat_solver(inputFile, verbose=False, timed=False, log=False, bruteForce=Fals
             satisfiability = True
 
     else:
-        result = None   
-        try:
-            result = len(nx.algorithms.matching.max_weight_matching(G, maxcardinality=True))   
-        except Exception as e:
-            result = 0 
-        
+        # Solve the problem
+        status = prob.solve()
+
+        utils.println(f"{pulp.LpStatus[status]}", logger)
+
+        # Extract the maximum independent set
+        result = sum(pulp.value(x[node]) for node in line_graph.nodes)
+
+        print(f"{result} >= {k}")
         satisfiability = result >= k
         
     if timed:
@@ -121,7 +132,7 @@ def main():
     helper.add_argument('-v', '--verbose', action='store_true', help='Enable verbose output')
     helper.add_argument('-t', '--timer', action='store_true', help='Enable timer output')
     helper.add_argument('-l', '--log', action='store_true', help='Enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 1.4')
+    helper.add_argument('--version', action='version', version='%(prog)s 1.5')
     
     # Initialize the parameters
     args = helper.parse_args()
