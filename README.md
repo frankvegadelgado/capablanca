@@ -14,22 +14,6 @@ The Minimum Vertex Cover (MVC) problem is a classic optimization problem in comp
 
 Given an undirected graph $G = (V, E)$, where $V$ is the set of vertices and $E$ is the set of edges, a vertex cover is a subset $V' \subseteq V$ such that for every edge $(u, v) \in E$, at least one of the vertices $u$ or $v$ belongs to $V'$. The Minimum Vertex Cover problem aims to find a vertex cover $V'$ with the smallest possible cardinality (i.e., the fewest number of vertices).
 
-## Visual Example
-
-Consider the following simple graph:
-
-A --- B
-| |
-C --- D
-
-In this graph:
-
-- $\{A, B, C, D\}$ is a vertex cover (it includes all vertices, trivially covering all edges).
-- $\{B, C\}$ is also a vertex cover, as it covers all edges: $(A, B)$, $(A, C)$, $(B, D)$, and $(C, D)$.
-- $\{A, D\}$ is _not_ a vertex cover because the edge $(B, C)$ is not covered.
-
-$\{B,C\}$ is the minimum vertex cover for this graph.
-
 ## Importance and Applications
 
 The Minimum Vertex Cover problem is important for several reasons:
