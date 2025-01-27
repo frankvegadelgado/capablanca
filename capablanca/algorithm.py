@@ -42,9 +42,9 @@ def find_vertex_cover(adjacency_matrix):
             minimum_edge_cut = nx.minimum_edge_cut(G, flow_func=shortest_augmenting_path)
             candidate1 = {u for u, _ in minimum_edge_cut}
             candidate2 = {v for _, v in minimum_edge_cut}
-            weight1 = sum(G.degree(u) for u in candidate1)
-            weight2 = sum(G.degree(v) for v in candidate2)
-            best_candidate = candidate1 if weight1 >= weight2 else candidate2
+            d1 = sum(G.degree(u) for u in candidate1)
+            d2 = sum(G.degree(v) for v in candidate2)
+            best_candidate = candidate1 if d1 >= d2 else candidate2
             for u in best_candidate:
                 min_vertex_cover.add(u)
                 G.remove_node(u)
