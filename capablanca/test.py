@@ -60,12 +60,12 @@ def main():
         logger.info(f"Number of non-zero elements: {sparse_matrix.nnz}")
         logger.info(f"Sparsity: {1 - (sparse_matrix.nnz / (sparse_matrix.shape[0] * sparse_matrix.shape[1]))}")
         
-        logger.info("An Approximate Solution with an approximation ratio of less than sqrt(2) started")
+        logger.info("An Approximate Solution with an approximation ratio of less than √2 started")
         started = time.time()
         
         result = algorithm.find_vertex_cover(sparse_matrix)
 
-        logger.info(f"An Approximate Solution with an approximation ratio of less than sqrt(2) done in: {(time.time() - started) * 1000.0} milliseconds")
+        logger.info(f"An Approximate Solution with an approximation ratio of less than √2 done in: {(time.time() - started) * 1000.0} milliseconds")
 
         answer = utils.string_result_format(result, count)
         output = f"Algorithm Smart Test {i + 1}: {answer}" 

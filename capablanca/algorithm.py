@@ -10,7 +10,7 @@ from . import utils
 
 def find_vertex_cover(adjacency_matrix):
     """
-    Calculates an approximate vertex cover in polynomial time with an approximation ratio of less than sqrt(2).
+    Calculates an approximate vertex cover in polynomial time with an approximation ratio of less than the square root of 2.
     
     Args:
         adjacency_matrix: A SciPy sparse adjacency matrix.

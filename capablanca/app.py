@@ -14,7 +14,7 @@ from . import utils
 def main():
     
     # Define the parameters
-    helper = argparse.ArgumentParser(prog="cover", description='Approximating the Minimum Vertex Cover within a factor of less than sqrt(2) for an undirected graph represented by a Boolean adjacency matrix in a file.')
+    helper = argparse.ArgumentParser(prog="cover", description='Estimating the Minimum Vertex Cover with an approximation factor smaller than √2 for an undirected graph encoded as a Boolean adjacency matrix stored in a file.')
     helper.add_argument('-i', '--inputFile', type=str, help='input file path', required=True)
     helper.add_argument('-a', '--approximation', action='store_true', help='enable comparison with a polynomial-time approximation approach within a factor of 2')
     helper.add_argument('-b', '--bruteForce', action='store_true', help='enable comparison with the exponential-time brute-force approach')
@@ -38,12 +38,12 @@ def main():
     filename = utils.get_file_name(filepath)
     logger.info(f"Parsing the Input File done in: {(time.time() - started) * 1000.0} milliseconds")
     
-    logger.info("An Approximate Solution with an approximation ratio of less than sqrt(2) started")
+    logger.info("An Approximate Solution with an approximation ratio of less than √2 started")
     started = time.time()
     
     result = algorithm.find_vertex_cover(sparse_matrix)
 
-    logger.info(f"An Approximate Solution with an approximation ratio of less than sqrt(2) done in: {(time.time() - started) * 1000.0} milliseconds")
+    logger.info(f"An Approximate Solution with an approximation ratio of less than √2 done in: {(time.time() - started) * 1000.0} milliseconds")
 
     answer = utils.string_result_format(result, count)
     output = f"{filename}: {answer}"

@@ -151,8 +151,8 @@ This will output:
 ```
 usage: cover [-h] -i INPUTFILE [-a] [-b] [-c] [-v] [-l] [--version]
 
-Approximating the Minimum Vertex Cover within a factor of less than sqrt(2) for an undirected graph represented by a Boolean
-adjacency matrix in a file.
+Estimating the Minimum Vertex Cover with an approximation factor smaller than √2 for an undirected graph encoded as a
+Boolean adjacency matrix stored in a file.
 
 options:
   -h, --help            show this help message and exit
@@ -209,7 +209,7 @@ It generates random square matrices with configurable dimensions (`-d`), sparsit
 # Complexity
 
 ```diff
-+ We present a polynomial-time algorithm achieving an approximation ratio below sqrt(2) for the minimum vertex cover, providing strong evidence that P = NP by efficiently solving a computationally hard problem with near-optimal solutions.
++ We present a polynomial-time algorithm achieving an approximation ratio below √2 for the minimum vertex cover, providing strong evidence that P = NP by efficiently solving a computationally hard problem with near-optimal solutions.
 
 + This result contradicts the Unique Games Conjecture, which predicts such improvements are impossible, thereby undermining UGC and reshaping our understanding of hardness of approximation.
 
