@@ -75,7 +75,7 @@ The algorithm runs in polynomial time because:
 
 5. The outer loop iterates over connected components, and each iteration processes a subset of the graph. The total number of iterations is bounded by the number of connected components, which is at most $n$.
 
-Thus, the overall time complexity is polynomial in the size of the input graph (i.e., $O(n^{2} \cdot m)$).
+Therefore, the overall time complexity is polynomial in the size of the input graph, as previously mentioned, when all these steps are combined.
 
 ---
 
