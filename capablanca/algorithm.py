@@ -4,7 +4,6 @@
 import scipy.sparse as sparse
 import itertools
 import networkx as nx
-from networkx.algorithms.flow import shortest_augmenting_path
 
 from . import utils
 
@@ -39,18 +38,26 @@ def find_vertex_cover(adjacency_matrix):
         component = components.pop()
         G = nx.Graph(graph.subgraph(component))
         if len(G.edges) > 0:
-            minimum_edge_cut = nx.minimum_edge_cut(G, flow_func=shortest_augmenting_path)
-            candidate1 = {u for u, _ in minimum_edge_cut}
-            candidate2 = {v for _, v in minimum_edge_cut}
-            d1 = sum(G.degree(u) for u in candidate1)
-            d2 = sum(G.degree(v) for v in candidate2)
-            best_candidate = candidate1 if d1 >= d2 else candidate2
-            for u in best_candidate:
-                min_vertex_cover.add(u)
-                G.remove_node(u)
+            edgelist = list(nx.algorithms.tree.minimum_spanning_edges(G, algorithm="kruskal", data=False))
+            tree = nx.Graph()
+            tree.add_edges_from(edgelist)
+            new_components = list(nx.connected_components(tree))
+            for new_component in new_components:
+                GG = tree.subgraph(new_component)
+                matching = nx.bipartite.maximum_matching(GG)
+                vertex_cover = nx.bipartite.to_vertex_cover(GG, matching)
+                for u in vertex_cover:
+                    min_vertex_cover.add(u)
+                    G.remove_node(u)
+            
             components.extend(list(nx.connected_components(G)))
 
-    return min_vertex_cover
+    approximate_vertex_cover = min_vertex_cover.copy()
+    for u in min_vertex_cover: 
+        if utils.is_vertex_cover(graph, approximate_vertex_cover - {u}):
+            approximate_vertex_cover.remove(u)       
+
+    return approximate_vertex_cover
 
 def find_vertex_cover_brute_force(adj_matrix):
     """

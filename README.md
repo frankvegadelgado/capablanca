@@ -33,49 +33,58 @@ The Minimum Vertex Cover problem is closely related to other graph problems, suc
 
 ---
 
-# Our Algorithm - Runtime $O(n^{2} \cdot m)$
+# Our Algorithm - Runtime $O(\vert V \vert^{3})$
 
 ## The algorithm explanation:
 
-The algorithm works as follows:
+Steps in the Algorithm
 
-1. It takes a sparse adjacency matrix as input and converts it into a graph.
+1. Input Validation: The algorithm checks if the input is a valid sparse adjacency
+   matrix and handles edge cases (e.g., empty graph).
 
-2. It decomposes the graph into connected components.
+2. Graph Construction: The adjacency matrix is converted into a graph G using
+   networkx.
 
-3. For each connected component, it computes a minimum edge cut and selects one of the two candidate vertex sets (based on their degrees) to add to the vertex cover.
+3. Component Decomposition: The graph is decomposed into connected components.
 
-4. It repeats this process until all edges are covered.
+4. Minimum Spanning Tree (MST): For each component, a minimum spanning
+   tree is computed.
+
+5. Bipartition and Matching: The MST is treated as a bipartite graph, and a
+   maximum matching is found. The matching is used to compute a vertex cover for
+   the bipartite graph.
+
+6. Vertex Cover Construction: The union of vertex covers from all components
+   forms the initial vertex cover.
+
+7. Redundancy Removal: The algorithm removes redundant vertices from the
+   vertex cover while ensuring that the remaining set still covers all edges.
 
 ## Correctness
 
-The algorithm guarantees that every edge in the graph is covered by the computed vertex cover. This is achieved through the following steps:
-
-1. The algorithm processes each connected component of the graph iteratively. This ensures that all parts of the graph are considered, even if the graph is disconnected.
-
-2. For each connected component, the algorithm computes a minimum edge cut. The vertices involved in this cut are added to the vertex cover, ensuring that all edges in the cut are covered.
-
-3. After adding the vertices of the cut to the cover, the algorithm removes these vertices from the graph. This step eliminates all edges incident to the selected vertices, ensuring they are fully covered.
-
-4. The process repeats on the remaining subgraph until no edges are left. This iterative approach guarantees that every edge in the original graph is incident to at least one vertex in the final cover.
-
-By systematically processing each connected component and leveraging the properties of minimum edge cuts, the algorithm constructs a valid vertex cover that satisfies the problem's requirements.
+- The algorithm ensures that every edge in the graph is covered by the vertex cover.
+  This is achieved by:
+  - Computing a vertex cover for each connected component.
+  - Using the properties of bipartite graphs and maximum matchings to ensure that
+    all edges in the MST (and hence in the original graph) are covered.
+  - Removing only those vertices that do not affect the coverage of edges (redundancy removal step).
+- The redundancy removal step ensures that the final vertex cover is minimal (no
+  unnecessary vertices are included).
+  Thus, the algorithm returns a valid vertex cover.
 
 ## Runtime Analysis
 
 The algorithm runs in polynomial time because:
 
-1. Converting the sparse adjacency matrix to edges takes $O(m)$ time, where $m$ is the number of edges.
+- Constructing the graph from the adjacency matrix takes $O(\vert V\vert + \vert E\vert)$.
 
-2. Constructing the graph using `nx.Graph` takes $O(m)$ time.
+- Computing the MST using Kruskal's algorithm takes $O(\vert E\vert \log \vert V\vert)$.
 
-3. The `nx.connected_components` function runs in $O(n + m)$ time, where $n$ is the number of vertices.
+- Computing the maximum matching and vertex cover for each bipartite graph takes $O(\vert V\vert^{2.5})$ (using Hopcroft-Karp algorithm).
 
-4. The `nx.minimum_edge_cut` function uses the shortest augmenting path algorithm, which runs in $O(n \cdot m)$ time.
+- The redundancy removal step takes $O(\vert V\vert \vert E\vert)$.
 
-5. The outer loop iterates over connected components, and each iteration processes a subset of the graph. The total number of iterations is bounded by the number of connected components, which is at most $n$.
-
-Therefore, the overall time complexity is polynomial in the size of the input graph, as previously mentioned, when all these steps are combined.
+Overall, the algorithm runs in polynomial time with respect to the size of the graph. Thus, the algorithm is a valid and efficient approximation algorithm for the vertex cover problem.
 
 ---
 
