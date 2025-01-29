@@ -89,10 +89,10 @@ pip install capablanca
    **Example Output:**
 
    ```
-   testMatrix1.txt: Vertex Cover Found 2, 3, 4
+   testMatrix1.txt: Vertex Cover Found 0, 1, 2
    ```
 
-   This indicates nodes `2, 3, 4` form a vertex cover.
+   This indicates nodes `0, 1, 2` form a vertex cover.
 
 ---
 
