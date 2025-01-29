@@ -1,6 +1,6 @@
 #                   Minimum Vertex Cover Solver
 #                          Frank Vega
-#                      Juanary 13th, 2025
+#                      Juanary 29th, 2025
 
 import argparse
 import time
@@ -21,7 +21,7 @@ def main():
     helper.add_argument('-c', '--count', action='store_true', help='calculate the size of the vertex cover')
     helper.add_argument('-v', '--verbose', action='store_true', help='anable verbose output')
     helper.add_argument('-l', '--log', action='store_true', help='enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 1.8')
+    helper.add_argument('--version', action='version', version='%(prog)s 1.9')
     
     # Initialize the parameters
     args = helper.parse_args()
