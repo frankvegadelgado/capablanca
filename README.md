@@ -8,131 +8,100 @@ This work builds upon [The Minimum Vertex Cover Problem](https://www.researchgat
 
 # The Minimum Vertex Cover Problem
 
-The Minimum Vertex Cover (MVC) problem is a classic optimization problem in computer science and graph theory. It deals with finding the smallest set of vertices in a graph that `covers` all the edges. This means that for every edge in the graph, at least one of its endpoints must be in the chosen set of vertices.
+The **Minimum Vertex Cover (MVC)** problem is a classic optimization problem in computer science and graph theory. It involves finding the smallest set of vertices in a graph that **covers** all edges, meaning at least one endpoint of every edge is included in the set.
 
 ## Formal Definition
 
-Given an undirected graph $G = (V, E)$, where $V$ is the set of vertices and $E$ is the set of edges, a vertex cover is a subset $V' \subseteq V$ such that for every edge $(u, v) \in E$, at least one of the vertices $u$ or $v$ belongs to $V'$. The Minimum Vertex Cover problem aims to find a vertex cover $V'$ with the smallest possible cardinality (i.e., the fewest number of vertices).
+Given an undirected graph $G = (V, E)$, a **vertex cover** is a subset $V' \subseteq V$ such that for every edge $(u, v) \in E$, at least one of $u$ or $v$ belongs to $V'$. The MVC problem seeks the vertex cover with the smallest cardinality.
 
 ## Importance and Applications
 
-The Minimum Vertex Cover problem is important for several reasons:
-
-- **Theoretical Significance:** It is a well-studied NP-hard problem, meaning that no known algorithm can solve it optimally for all instances in polynomial time. This makes it a crucial problem in complexity theory.
-- **Practical Applications:** It has applications in various fields, including:
-  - **Network security:** Finding critical nodes in a network that, if compromised, would disrupt connections.
-  - **Bioinformatics:** Identifying important genes in gene regulatory networks.
-  - **Wireless sensor networks:** Determining the minimum number of sensors needed to monitor a given area.
+- **Theoretical Significance:** MVC is a well-known NP-hard problem, central to complexity theory.
+- **Practical Applications:**
+  - **Network Security:** Identifying critical nodes to disrupt connections.
+  - **Bioinformatics:** Analyzing gene regulatory networks.
+  - **Wireless Sensor Networks:** Optimizing sensor coverage.
 
 ## Related Problems
 
-The Minimum Vertex Cover problem is closely related to other graph problems, such as:
-
-- **Maximum Independent Set:** A set of vertices where no two vertices are adjacent. The size of the minimum vertex cover plus the size of the maximum independent set is equal to the total number of vertices in the graph.
-- **Set Cover Problem:** A more general problem where sets of elements are used to cover a universe of elements.
+- **Maximum Independent Set:** The complement of a vertex cover.
+- **Set Cover Problem:** A generalization of MVC.
 
 ---
 
-# Our Algorithm - Runtime $O(\vert V \vert^{3})$
+# Our Algorithm - Polynomial Runtime
 
-## The algorithm explanation:
+## Algorithm Overview
 
-Steps in the Algorithm
-
-1. Input Validation: The algorithm checks if the input is a valid sparse adjacency
-   matrix and handles edge cases (e.g., empty graph).
-
-2. Graph Construction: The adjacency matrix is converted into a graph G using
-   networkx.
-
-3. Component Decomposition: The graph is decomposed into connected components.
-
-4. Minimum Spanning Tree (MST): For each component, a minimum spanning
-   tree is computed.
-
-5. Bipartition and Matching: The MST is treated as a bipartite graph, and a
-   maximum matching is found. The matching is used to compute a vertex cover for
-   the bipartite graph.
-
-6. Vertex Cover Construction: The union of vertex covers from all components
-   forms the initial vertex cover.
-
-7. Redundancy Removal: The algorithm removes redundant vertices from the
-   vertex cover while ensuring that the remaining set still covers all edges.
+1. **Input Validation:** Ensures the input is a valid sparse adjacency matrix.
+2. **Graph Construction:** Converts the matrix into a graph using `networkx`.
+3. **Component Decomposition:** Breaks the graph into connected components.
+4. **Minimum Spanning Tree (MST):** Computes an MST for each component.
+5. **Bipartition and Matching:** Treats the MST as a bipartite graph and finds a maximum matching.
+6. **Vertex Cover Construction:** Combines vertex covers from all components.
+7. **Redundancy Removal:** Eliminates unnecessary vertices while maintaining coverage.
 
 ## Correctness
 
-- The algorithm ensures that every edge in the graph is covered by the vertex cover.
-  This is achieved by:
-  - Computing a vertex cover for each connected component.
-  - Using the properties of bipartite graphs and maximum matchings to ensure that
-    all edges in the MST (and hence in the original graph) are covered.
-  - Removing only those vertices that do not affect the coverage of edges (redundancy removal step).
-- The redundancy removal step ensures that the final vertex cover is minimal (no
-  unnecessary vertices are included).
-  Thus, the algorithm returns a valid vertex cover.
+- Ensures all edges are covered by leveraging bipartite graph properties and maximum matchings.
+- The redundancy removal step guarantees minimality.
 
 ## Runtime Analysis
 
-The algorithm runs in polynomial time because:
+- **Graph Construction:** $O(|V| + |E|)$
+- **MST Computation:** $O(|E| \log |V|)$
+- **Maximum Matching:** $O(|V|^{2.5})$ (Hopcroft-Karp algorithm)
+- **Redundancy Removal:** $O(|V||E|)$
 
-- Constructing the graph from the adjacency matrix takes $O(\vert V\vert + \vert E\vert)$.
-
-- Computing the MST using Kruskal's algorithm takes $O(\vert E\vert \log \vert V\vert)$.
-
-- Computing the maximum matching and vertex cover for each bipartite graph takes $O(\vert V\vert^{2.5})$ (using Hopcroft-Karp algorithm).
-
-- The redundancy removal step takes $O(\vert V\vert \vert E\vert)$.
-
-Overall, the algorithm runs in polynomial time with respect to the size of the graph. Thus, the algorithm is a valid and efficient approximation algorithm for the vertex cover problem.
+Overall, the algorithm runs in **polynomial time**.
 
 ---
 
 # Compile and Environment
 
-## Install Python >=3.10.
+## Prerequisites
 
-## Install Capablanca's Library and its Dependencies with:
+- Python ≥ 3.10
+
+## Installation
 
 ```bash
 pip install capablanca
 ```
 
-# Execute
+## Execution
 
-1. Go to the package directory to use the benchmarks:
+1. Clone the repository:
 
-```bash
-git clone https://github.com/frankvegadelgado/capablanca.git
-cd capablanca
-```
+   ```bash
+   git clone https://github.com/frankvegadelgado/capablanca.git
+   cd capablanca
+   ```
 
-2. Execute the script:
+2. Run the script:
 
-```bash
-cover -i .\benchmarks\testMatrix1.txt
-```
+   ```bash
+   cover -i ./benchmarks/testMatrix1.txt
+   ```
 
-utilizing the `cover` command provided by Capablanca's Library to execute the Boolean adjacency matrix `capablanca\benchmarks\testMatrix1.txt`. We also support .xz, .lzma, .bz2, and .bzip2 compressed .txt files.
+   Supported file formats: `.txt`, `.xz`, `.lzma`, `.bz2`, `.bzip2`.
 
-## The console output will display:
+   **Example Output:**
 
-```
-testMatrix1.txt: Vertex Cover Found 2, 3, 4
-```
+   ```
+   testMatrix1.txt: Vertex Cover Found 2, 3, 4
+   ```
 
-which implies that the Boolean adjacency matrix `capablanca\benchmarks\testMatrix1.txt` contains a vertex cover of nodes `2, 3, 4`.
+   This indicates nodes `2, 3, 4` form a vertex cover.
 
 ---
 
-## Size of the Approximate Vertex Cover - Polynomial Runtime
+## Vertex Cover Size
 
-The `-c` flag counts the nodes in the approximate vertex cover.
-
-**Example:**
+Use the `-c` flag to count the nodes in the vertex cover:
 
 ```bash
-cover -i .\benchmarks\testMatrix2.txt -c
+cover -i ./benchmarks/testMatrix2.txt -c
 ```
 
 **Output:**
@@ -141,27 +110,22 @@ cover -i .\benchmarks\testMatrix2.txt -c
 testMatrix2.txt: Vertex Cover Size 5
 ```
 
-## Runtime Analysis:
-
-We employ the same algorithm used to find vertex cover set.
-
 ---
 
 # Command Options
 
-To display the help message and available options, run the following command in your terminal:
+Display help and options:
 
 ```bash
 cover -h
 ```
 
-This will output:
+**Output:**
 
-```
+```bash
 usage: cover [-h] -i INPUTFILE [-a] [-b] [-c] [-v] [-l] [--version]
 
-Estimating the Minimum Vertex Cover with an approximation factor smaller than √2 for an undirected graph encoded as a
-Boolean adjacency matrix stored in a file.
+Estimating the Minimum Vertex Cover with an approximation factor smaller than √2 for an undirected graph encoded as a Boolean adjacency matrix stored in a file.
 
 options:
   -h, --help            show this help message and exit
@@ -170,18 +134,18 @@ options:
   -a, --approximation   enable comparison with a polynomial-time approximation approach within a factor of 2
   -b, --bruteForce      enable comparison with the exponential-time brute-force approach
   -c, --count           calculate the size of the vertex cover
-  -v, --verbose         anable verbose output
+  -v, --verbose         enable verbose output
   -l, --log             enable file logging
   --version             show program's version number and exit
 ```
 
-This output describes all available options.
+---
 
-## The Capablanca Testing Application
+# Testing Application
 
-A command-line tool, `test_cover`, has been developed for testing algorithms on randomly generated, large sparse matrices. It accepts the following options:
+A command-line utility named `test_cover` is provided for evaluating the Algorithm using randomly generated, large sparse matrices. It supports the following options:
 
-```
+```bash
 usage: test_cover [-h] -d DIMENSION [-n NUM_TESTS] [-s SPARSITY] [-a] [-b] [-c] [-w] [-v] [-l] [--version]
 
 The Capablanca Testing Application.
@@ -198,35 +162,29 @@ options:
   -b, --bruteForce      enable comparison with the exponential-time brute-force approach
   -c, --count           calculate the size of the vertex cover
   -w, --write           write the generated random matrix to a file in the current directory
-  -v, --verbose         anable verbose output
+  -v, --verbose         enable verbose output
   -l, --log             enable file logging
   --version             show program's version number and exit
 ```
-
-**This tool is designed to benchmark algorithms for sparse matrix operations.**
-
-It generates random square matrices with configurable dimensions (`-d`), sparsity levels (`-s`), and number of tests (`-n`). Brute-force and heuristic comparisons are available but not recommended for large datasets due to performance issues. Additionally, the generated matrix can be written to the current directory (`-w`), and verbose output or file logging can be enabled with the (`-v`) or (`-l`) flag, respectively, to record test results.
 
 ---
 
 # Code
 
-- Python code by **Frank Vega**.
+- Python implementation by **Frank Vega**.
 
 ---
 
 # Complexity
 
 ```diff
-+ We present a polynomial-time algorithm achieving an approximation ratio below √2 for the minimum vertex cover, providing strong evidence that P = NP by efficiently solving a computationally hard problem with near-optimal solutions.
++ We present a polynomial-time algorithm achieving an approximation ratio below √2 for MVC, providing strong evidence that P = NP by efficiently solving a computationally hard problem with near-optimal solutions.
 
-+ This result contradicts the Unique Games Conjecture, which predicts such improvements are impossible, thereby undermining UGC and reshaping our understanding of hardness of approximation.
-
-+ The algorithm not only solves a long-standing open problem but also suggests that many other optimization problems might admit better solutions, revolutionizing theoretical computer science.
++ This result contradicts the Unique Games Conjecture, suggesting that many optimization problems may admit better solutions, revolutionizing theoretical computer science.
 ```
 
 ---
 
 # License
 
-- MIT.
+- MIT License.
