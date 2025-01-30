@@ -2,7 +2,7 @@
 
 ![Honoring the Memory of Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)](docs/capablanca.jpg)
 
-This work builds upon [The Minimum Vertex Cover Problem](https://www.researchgate.net/publication/388420196_The_Minimum_Vertex_Cover_Problem).
+This work builds upon [The Minimum Vertex Cover Problem](https://www.researchgate.net/publication/388526292_The_Minimum_Vertex_Cover_Problem).
 
 ---
 
@@ -26,6 +26,40 @@ Given an undirected graph $G = (V, E)$, a **vertex cover** is a subset $V' \subs
 
 - **Maximum Independent Set:** The complement of a vertex cover.
 - **Set Cover Problem:** A generalization of MVC.
+
+---
+
+## Problem Statement
+
+Input: A Boolean Adjacency Matrix $M$.
+
+Answer: Find a Minimum Vertex Cover.
+
+### Example Instance: 5 x 5 matrix
+
+|        | c0  | c1  | c2  | c3  | c4  |
+| ------ | --- | --- | --- | --- | --- |
+| **r0** | 0   | 0   | 1   | 0   | 1   |
+| **r1** | 0   | 0   | 0   | 1   | 0   |
+| **r2** | 1   | 0   | 0   | 0   | 1   |
+| **r3** | 0   | 1   | 0   | 0   | 0   |
+| **r4** | 1   | 0   | 1   | 0   | 0   |
+
+A matrix is represented in a text file using the following string representation:
+
+```
+00101
+00010
+10001
+01000
+10100
+```
+
+This represents a 5x5 matrix where each line corresponds to a row, and '1' indicates a connection or presence of an element, while '0' indicates its absence.
+
+_Example Solution:_
+
+Vertex Cover Found `0, 1, 2`: Nodes `0, 1, 2` form an optimal solution.
 
 ---
 
@@ -81,7 +115,7 @@ pip install capablanca
    cover -i ./benchmarks/testMatrix1.txt
    ```
 
-   Supported file formats: `.txt`, `.xz`, `.lzma`, `.bz2`, `.bzip2`.
+   utilizing the `cover` command provided by Capablanca's Library to execute the Boolean adjacency matrix `capablanca\benchmarks\testMatrix1.txt`. The file `testMatrix1.txt` represents the example described herein. We also support `.xz`, `.lzma`, `.bz2`, and `.bzip2` compressed `.txt` files.
 
    **Example Output:**
 

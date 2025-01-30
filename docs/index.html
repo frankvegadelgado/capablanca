@@ -54,7 +54,7 @@
     <p>
       This work builds upon
       <a
-        href="https://www.researchgate.net/publication/388420196_The_Minimum_Vertex_Cover_Problem"
+        href="https://www.researchgate.net/publication/388526292_The_Minimum_Vertex_Cover_Problem"
         >The Minimum Vertex Cover Problem</a
       >.
     </p>
@@ -105,6 +105,85 @@
       </li>
       <li><strong>Set Cover Problem:</strong> A generalization of MVC.</li>
     </ul>
+    <hr />
+    <h2>Problem Statement</h2>
+    <p>Input: A Boolean Adjacency Matrix $M$.</p>
+    <p>Answer: Find a Minimum Vertex Cover.</p>
+    <h3>Example Instance: 5 x 5 matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>c0</th>
+          <th>c1</th>
+          <th>c2</th>
+          <th>c3</th>
+          <th>c4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>r0</strong></td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><strong>r1</strong></td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td><strong>r2</strong></td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><strong>r3</strong></td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <td><strong>r4</strong></td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      A matrix is represented in a text file using the following string
+      representation:
+    </p>
+    <pre><code>00101
+00010
+10001
+01000
+10100
+</code></pre>
+    <p>
+      This represents a 5x5 matrix where each line corresponds to a row, and '1'
+      indicates a connection or presence of an element, while '0' indicates its
+      absence.
+    </p>
+    <p><em>Example Solution:</em></p>
+    <p>
+      Vertex Cover Found <code>0, 1, 2</code>: Nodes <code>0, 1, 2</code> form
+      an optimal solution.
+    </p>
     <hr />
     <h1>Our Algorithm - Polynomial Runtime</h1>
     <h2>Algorithm Overview</h2>
@@ -173,8 +252,13 @@ cd capablanca
         <pre><code class="language-bash">cover -i ./benchmarks/testMatrix1.txt
 </code></pre>
         <p>
-          Supported file formats: <code>.txt</code>, <code>.xz</code>,
-          <code>.lzma</code>, <code>.bz2</code>, <code>.bzip2</code>.
+          utilizing the <code>cover</code> command provided by Capablanca's
+          Library to execute the Boolean adjacency matrix
+          <code>capablanca\benchmarks\testMatrix1.txt</code>. The file
+          <code>testMatrix1.txt</code> represents the example described herein.
+          We also support <code>.xz</code>, <code>.lzma</code>,
+          <code>.bz2</code>, and <code>.bzip2</code> compressed
+          <code>.txt</code> files.
         </p>
         <p><strong>Example Output:</strong></p>
         <pre><code>testMatrix1.txt: Vertex Cover Found 0, 1, 2

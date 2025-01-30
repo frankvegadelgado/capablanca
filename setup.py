@@ -2,7 +2,7 @@ from pathlib import Path
 
 import setuptools
 
-VERSION = "2.0"
+VERSION = "2.1"
 
 NAME = "capablanca"
 
@@ -19,7 +19,7 @@ setuptools.setup(
     url="https://github.com/frankvegadelgado/capablanca",
     project_urls={
         "Source Code": "https://github.com/frankvegadelgado/capablanca",
-        "Documentation Research": "https://www.researchgate.net/publication/388420196_The_Minimum_Vertex_Cover_Problem",
+        "Documentation Research": "https://www.researchgate.net/publication/388526292_The_Minimum_Vertex_Cover_Problem",
     },
     author="Frank Vega",
     author_email="vega.frank@gmail.com",
