@@ -1,4 +1,4 @@
-# Created on 01/29/2025
+# Created on 01/30/2025
 # Author: Frank Vega
 
 import time
@@ -34,7 +34,7 @@ def main():
     helper.add_argument('-w', '--write', action='store_true', help='write the generated random matrix to a file in the current directory')
     helper.add_argument('-v', '--verbose', action='store_true', help='anable verbose output')
     helper.add_argument('-l', '--log', action='store_true', help='enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 1.9')
+    helper.add_argument('--version', action='version', version='%(prog)s 2.0')
     
     # Initialize the parameters
     args = helper.parse_args()

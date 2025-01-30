@@ -122,7 +122,7 @@
         connected components.
       </li>
       <li>
-        <strong>Minimum Spanning Tree (MST):</strong> Computes an MST for each
+        <strong>Maximum Spanning Tree (MST):</strong> Computes an MST for each
         component.
       </li>
       <li>
@@ -133,10 +133,6 @@
         <strong>Vertex Cover Construction:</strong> Combines vertex covers from
         all components.
       </li>
-      <li>
-        <strong>Redundancy Removal:</strong> Eliminates unnecessary vertices
-        while maintaining coverage.
-      </li>
     </ol>
     <h2>Correctness</h2>
     <ul>
@@ -144,17 +140,15 @@
         Ensures all edges are covered by leveraging bipartite graph properties
         and maximum matchings.
       </li>
-      <li>The redundancy removal step guarantees minimality.</li>
     </ul>
     <h2>Runtime Analysis</h2>
     <ul>
       <li><strong>Graph Construction:</strong> $O(|V| + |E|)$</li>
       <li><strong>MST Computation:</strong> $O(|E| \log |V|)$</li>
       <li>
-        <strong>Maximum Matching:</strong> $O(|V|^{2.5})$ (Hopcroft-Karp
+        <strong>Maximum Matching:</strong> $O(|V|^{1.5})$ (Hopcroft-Karp
         algorithm)
       </li>
-      <li><strong>Redundancy Removal:</strong> $O(|V||E|)$</li>
     </ul>
     <p>Overall, the algorithm runs in <strong>polynomial time</strong>.</p>
     <hr />
@@ -194,7 +188,7 @@ cd capablanca
     <pre><code class="language-bash">cover -i ./benchmarks/testMatrix2.txt -c
 </code></pre>
     <p><strong>Output:</strong></p>
-    <pre><code>testMatrix2.txt: Vertex Cover Size 5
+    <pre><code>testMatrix2.txt: Vertex Cover Size 6
 </code></pre>
     <hr />
     <h1>Command Options</h1>

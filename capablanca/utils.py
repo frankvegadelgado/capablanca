@@ -1,4 +1,4 @@
-# Created on 01/29/2025
+# Created on 01/30/2025
 # Author: Frank Vega
 
 import scipy.sparse as sparse
@@ -296,3 +296,26 @@ def is_vertex_cover(G, subset):
         if u not in subset and v not in subset:
             return False
     return True
+
+def is_vertex_redundant(graph, vertex, vertex_set):
+    """
+    Check if a vertex does not cover any edge that a set of vertices does not already cover.
+
+    Parameters:
+    - graph: A NetworkX graph.
+    - vertex: The vertex to check.
+    - vertex_set: A set of vertices.
+
+    Returns:
+    - True if the vertex does not cover any additional edge, False otherwise.
+    """
+    # Get all edges covered by the vertex set
+    edges_covered_by_set = set()
+    for v in vertex_set:
+        edges_covered_by_set.update(graph.edges(v))
+
+    # Get all edges covered by the vertex
+    edges_covered_by_vertex = set(graph.edges(vertex))
+
+    # Check if the edges covered by the vertex are a subset of the edges covered by the set
+    return edges_covered_by_vertex.issubset(edges_covered_by_set)

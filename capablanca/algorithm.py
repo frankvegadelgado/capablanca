@@ -1,4 +1,4 @@
-# Created on 01/29/2025
+# Created on 01/30/2025
 # Author: Frank Vega
 
 import scipy.sparse as sparse
@@ -33,29 +33,21 @@ def find_vertex_cover(adjacency_matrix):
     edges = utils.sparse_matrix_to_edges(adjacency_matrix)
     graph = nx.Graph()
     graph.add_edges_from(edges)
-    min_vertex_cover, components = set(), list(nx.connected_components(graph))
+    approximate_vertex_cover = set() 
+    components = list(nx.connected_components(graph))
     while components:
         component = components.pop()
         G = nx.Graph(graph.subgraph(component))
         if len(G.edges) > 0:
-            edgelist = list(nx.algorithms.tree.minimum_spanning_edges(G, algorithm="kruskal", data=False))
-            tree = nx.Graph()
-            tree.add_edges_from(edgelist)
-            new_components = list(nx.connected_components(tree))
-            for new_component in new_components:
-                GG = tree.subgraph(new_component)
-                matching = nx.bipartite.maximum_matching(GG)
-                vertex_cover = nx.bipartite.to_vertex_cover(GG, matching)
-                for u in vertex_cover:
-                    min_vertex_cover.add(u)
-                    G.remove_node(u)
-            
+            tree = nx.algorithms.tree.maximum_spanning_edges(G, algorithm="kruskal")
+            bipartite = nx.Graph(tree)
+            matching = nx.bipartite.maximum_matching(bipartite)
+            vertex_cover = nx.bipartite.to_vertex_cover(bipartite, matching)
+            for u in vertex_cover:
+                approximate_vertex_cover.add(u)
+                G.remove_node(u)
+        
             components.extend(list(nx.connected_components(G)))
-
-    approximate_vertex_cover = min_vertex_cover.copy()
-    for u in min_vertex_cover: 
-        if utils.is_vertex_cover(graph, approximate_vertex_cover - {u}):
-            approximate_vertex_cover.remove(u)       
 
     return approximate_vertex_cover
 

@@ -36,22 +36,19 @@ Given an undirected graph $G = (V, E)$, a **vertex cover** is a subset $V' \subs
 1. **Input Validation:** Ensures the input is a valid sparse adjacency matrix.
 2. **Graph Construction:** Converts the matrix into a graph using `networkx`.
 3. **Component Decomposition:** Breaks the graph into connected components.
-4. **Minimum Spanning Tree (MST):** Computes an MST for each component.
+4. **Maximum Spanning Tree (MST):** Computes an MST for each component.
 5. **Bipartition and Matching:** Treats the MST as a bipartite graph and finds a maximum matching.
 6. **Vertex Cover Construction:** Combines vertex covers from all components.
-7. **Redundancy Removal:** Eliminates unnecessary vertices while maintaining coverage.
 
 ## Correctness
 
 - Ensures all edges are covered by leveraging bipartite graph properties and maximum matchings.
-- The redundancy removal step guarantees minimality.
 
 ## Runtime Analysis
 
 - **Graph Construction:** $O(|V| + |E|)$
 - **MST Computation:** $O(|E| \log |V|)$
-- **Maximum Matching:** $O(|V|^{2.5})$ (Hopcroft-Karp algorithm)
-- **Redundancy Removal:** $O(|V||E|)$
+- **Maximum Matching:** $O(|V|^{1.5})$ (Hopcroft-Karp algorithm)
 
 Overall, the algorithm runs in **polynomial time**.
 
@@ -107,7 +104,7 @@ cover -i ./benchmarks/testMatrix2.txt -c
 **Output:**
 
 ```
-testMatrix2.txt: Vertex Cover Size 5
+testMatrix2.txt: Vertex Cover Size 6
 ```
 
 ---
