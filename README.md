@@ -81,7 +81,7 @@ Vertex Cover Found `0, 1, 2`: Nodes `0, 1, 2` form an optimal solution.
 ## Runtime Analysis
 
 - **Graph Construction:** $O(|V| + |E|)$
-- **MST Computation:** $O(|E| \log |V|)$
+- **MST Computation:** $O(|E| \log |V|)$ (Kruskal's algorithm)
 - **Maximum Matching:** $O(|V|^{1.5})$ (Hopcroft-Karp algorithm)
 
 Overall, the algorithm runs in **polynomial time**.

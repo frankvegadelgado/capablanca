@@ -31,21 +31,19 @@ def find_vertex_cover(adjacency_matrix):
         return None # Handle empty graph
     
     edges = utils.sparse_matrix_to_edges(adjacency_matrix)
-    graph = nx.Graph()
-    graph.add_edges_from(edges)
+    graph = nx.Graph(edges)
     approximate_vertex_cover = set() 
     components = list(nx.connected_components(graph))
     while components:
         component = components.pop()
-        G = nx.Graph(graph.subgraph(component))
-        if len(G.edges) > 0:
-            tree = nx.algorithms.tree.maximum_spanning_edges(G, algorithm="kruskal")
+        G = graph.subgraph(component).copy() # Important: Create a copy
+        if G.number_of_edges() > 0:
+            tree = nx.maximum_spanning_tree(G, algorithm="kruskal")
             bipartite = nx.Graph(tree)
-            matching = nx.bipartite.maximum_matching(bipartite)
+            matching = nx.bipartite.hopcroft_karp_matching(bipartite)
             vertex_cover = nx.bipartite.to_vertex_cover(bipartite, matching)
-            for u in vertex_cover:
-                approximate_vertex_cover.add(u)
-                G.remove_node(u)
+            approximate_vertex_cover.update(vertex_cover) 
+            G.remove_nodes_from(vertex_cover)
         
             components.extend(list(nx.connected_components(G)))
 
