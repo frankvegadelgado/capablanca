@@ -70,7 +70,7 @@ Vertex Cover Found `0, 1, 2`: Nodes `0, 1, 2` form an optimal solution.
 1. **Input Validation:** Ensures the input is a valid sparse adjacency matrix.
 2. **Graph Construction:** Converts the matrix into a graph using `networkx`.
 3. **Component Decomposition:** Breaks the graph into connected components.
-4. **Maximum Spanning Tree (MST):** Computes an MST for each component.
+4. **Minimum Spanning Tree (MST):** Computes an MST for each component.
 5. **Bipartition and Matching:** Treats the MST as a bipartite graph and finds a maximum matching.
 6. **Vertex Cover Construction:** Combines vertex covers from all components.
 

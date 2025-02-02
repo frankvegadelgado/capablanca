@@ -38,10 +38,9 @@ def find_vertex_cover(adjacency_matrix):
         component = components.pop()
         G = graph.subgraph(component).copy() # Important: Create a copy
         if G.number_of_edges() > 0:
-            tree = nx.maximum_spanning_tree(G, algorithm="kruskal")
-            bipartite = nx.Graph(tree)
-            matching = nx.bipartite.hopcroft_karp_matching(bipartite)
-            vertex_cover = nx.bipartite.to_vertex_cover(bipartite, matching)
+            tree = nx.minimum_spanning_tree(G, algorithm="kruskal")
+            matching = nx.bipartite.hopcroft_karp_matching(tree)
+            vertex_cover = nx.bipartite.to_vertex_cover(tree, matching)
             approximate_vertex_cover.update(vertex_cover) 
             G.remove_nodes_from(vertex_cover)
         
