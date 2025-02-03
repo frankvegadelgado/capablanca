@@ -14,14 +14,14 @@ from . import utils
 def main():
     
     # Define the parameters
-    helper = argparse.ArgumentParser(prog="cover", description='Estimating the Minimum Vertex Cover with an approximation factor of 4/3 for large enough undirected graphs encoded as a Boolean adjacency matrix stored in a file.')
+    helper = argparse.ArgumentParser(prog="cover", description='Estimating the Minimum Vertex Cover with an approximation factor of 7/5 for large enough undirected graphs encoded as a Boolean adjacency matrix stored in a file.')
     helper.add_argument('-i', '--inputFile', type=str, help='input file path', required=True)
     helper.add_argument('-a', '--approximation', action='store_true', help='enable comparison with a polynomial-time approximation approach within a factor of 2')
     helper.add_argument('-b', '--bruteForce', action='store_true', help='enable comparison with the exponential-time brute-force approach')
     helper.add_argument('-c', '--count', action='store_true', help='calculate the size of the vertex cover')
     helper.add_argument('-v', '--verbose', action='store_true', help='anable verbose output')
     helper.add_argument('-l', '--log', action='store_true', help='enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 2.4')
+    helper.add_argument('--version', action='version', version='%(prog)s 2.5')
     
     # Initialize the parameters
     args = helper.parse_args()
@@ -38,12 +38,12 @@ def main():
     filename = utils.get_file_name(filepath)
     logger.info(f"Parsing the Input File done in: {(time.time() - started) * 1000.0} milliseconds")
     
-    logger.info("An Approximate Solution with an approximation ratio of 4/3 started")
+    logger.info("An Approximate Solution with an approximation ratio of 7/5 started")
     started = time.time()
     
     result = algorithm.find_vertex_cover(sparse_matrix)
 
-    logger.info(f"An Approximate Solution with an approximation ratio of 4/3 done in: {(time.time() - started) * 1000.0} milliseconds")
+    logger.info(f"An Approximate Solution with an approximation ratio of 7/5 done in: {(time.time() - started) * 1000.0} milliseconds")
 
     answer = utils.string_result_format(result, count)
     output = f"{filename}: {answer}"
