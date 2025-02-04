@@ -38,13 +38,20 @@ def find_vertex_cover(adjacency_matrix):
         component = components.pop()
         G = graph.subgraph(component)
         if G.number_of_edges() > 0:
-            bipartite = G if nx.bipartite.is_bipartite(G) else nx.minimum_spanning_tree(G, algorithm="kruskal")
-            matching = nx.bipartite.hopcroft_karp_matching(bipartite)
-            vertex_cover = nx.bipartite.to_vertex_cover(bipartite, matching)
-            approximate_vertex_cover.update(vertex_cover)
-            if not nx.bipartite.is_bipartite(G):
+            if nx.bipartite.is_bipartite(G):
+                new_matching = nx.bipartite.hopcroft_karp_matching(G)
+                new_vertex_cover = nx.bipartite.to_vertex_cover(G, new_matching)
+                approximate_vertex_cover.update(new_vertex_cover) 
+            else:
+                new_matching = nx.matching.maximal_matching(G)
+                candidate1 = {u for u, _ in new_matching}
+                candidate2 = {v for _, v in new_matching}
+                d1 = sum(G.degree(u) for u in candidate1)
+                d2 = sum(G.degree(v) for v in candidate2)
+                best_candidate = candidate1 if d1 >= d2 else candidate2
+                approximate_vertex_cover.update(best_candidate)
                 residual = G.copy() 
-                residual.remove_nodes_from(vertex_cover)
+                residual.remove_nodes_from(best_candidate)
                 components.extend(list(nx.connected_components(residual)))
     
     return approximate_vertex_cover
