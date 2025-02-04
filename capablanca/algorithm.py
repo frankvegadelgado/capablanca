@@ -9,7 +9,7 @@ from . import utils
 
 def find_vertex_cover(adjacency_matrix):
     """
-    Calculates an approximate vertex cover in polynomial time with an approximation ratio of 7/5 for large enough graphs.
+    Calculates an approximate vertex cover in polynomial time with an approximation ratio of 3/2.
     
     Args:
         adjacency_matrix: A SciPy sparse adjacency matrix.
@@ -33,19 +33,33 @@ def find_vertex_cover(adjacency_matrix):
     edges = utils.sparse_matrix_to_edges(adjacency_matrix)
     graph = nx.Graph(edges)
     approximate_vertex_cover = set() 
-    components = list(nx.connected_components(graph))
-    while components:
-        component = components.pop()
-        G = graph.subgraph(component).copy() # Important: Create a copy
+    for component in nx.connected_components(graph):
+        G = graph.subgraph(component)
         if G.number_of_edges() > 0:
-            tree = nx.minimum_spanning_tree(G, algorithm="kruskal")
-            matching = nx.bipartite.hopcroft_karp_matching(tree)
-            vertex_cover = nx.bipartite.to_vertex_cover(tree, matching)
+            bipartite = G if nx.bipartite.is_bipartite(G) else nx.minimum_spanning_tree(G, algorithm="kruskal")
+            matching = nx.bipartite.hopcroft_karp_matching(bipartite)
+            vertex_cover = nx.bipartite.to_vertex_cover(bipartite, matching)
             approximate_vertex_cover.update(vertex_cover) 
-            G.remove_nodes_from(vertex_cover)
-        
-            components.extend(list(nx.connected_components(G)))
-
+            if not nx.bipartite.is_bipartite(G):
+                complement = set(bipartite) - vertex_cover
+                sub_G = G.subgraph(complement)
+                for sub_component in nx.connected_components(sub_G):
+                    new_G = sub_G.subgraph(sub_component)
+                    if new_G.number_of_edges() > 0:
+                        if nx.bipartite.is_bipartite(new_G):
+                            new_matching = nx.bipartite.hopcroft_karp_matching(new_G)
+                            new_vertex_cover = nx.bipartite.to_vertex_cover(new_G, new_matching)
+                            approximate_vertex_cover.update(new_vertex_cover) 
+                        else:
+                            new_matching = nx.matching.max_weight_matching(new_G)
+                            candidate1 = {u for u, _ in new_matching}
+                            candidate2 = {v for _, v in new_matching}
+                            d1 = sum(G.degree(u) for u in candidate1)
+                            d2 = sum(G.degree(v) for v in candidate2)
+                            best_candidate = candidate1 if d1 >= d2 else candidate2
+                            approximate_vertex_cover.update(best_candidate)
+                            
+            
     return approximate_vertex_cover
 
 def find_vertex_cover_brute_force(adj_matrix):
