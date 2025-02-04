@@ -42,16 +42,16 @@ def find_vertex_cover(adjacency_matrix):
             approximate_vertex_cover.update(vertex_cover) 
             if not nx.bipartite.is_bipartite(G):
                 complement = set(bipartite) - vertex_cover
-                sub_G = G.subgraph(complement)
-                for sub_component in nx.connected_components(sub_G):
-                    new_G = sub_G.subgraph(sub_component)
+                sub_graph = G.subgraph(complement)
+                for sub_component in nx.connected_components(sub_graph):
+                    new_G = sub_graph.subgraph(sub_component)
                     if new_G.number_of_edges() > 0:
                         if nx.bipartite.is_bipartite(new_G):
                             new_matching = nx.bipartite.hopcroft_karp_matching(new_G)
                             new_vertex_cover = nx.bipartite.to_vertex_cover(new_G, new_matching)
                             approximate_vertex_cover.update(new_vertex_cover) 
                         else:
-                            new_matching = nx.matching.max_weight_matching(new_G)
+                            new_matching = nx.matching.maximal_matching(new_G)
                             candidate1 = {u for u, _ in new_matching}
                             candidate2 = {v for _, v in new_matching}
                             d1 = sum(G.degree(u) for u in candidate1)
