@@ -39,13 +39,13 @@ def find_vertex_cover(adjacency_matrix):
         G = graph.subgraph(component)
         if G.number_of_edges() > 0:
             if nx.bipartite.is_bipartite(G):
-                new_matching = nx.bipartite.hopcroft_karp_matching(G)
-                new_vertex_cover = nx.bipartite.to_vertex_cover(G, new_matching)
-                approximate_vertex_cover.update(new_vertex_cover) 
+                bipartite_matching = nx.bipartite.hopcroft_karp_matching(G)
+                bipartite_vertex_cover = nx.bipartite.to_vertex_cover(G, bipartite_matching)
+                approximate_vertex_cover.update(bipartite_vertex_cover) 
             else:
-                new_matching = nx.matching.maximal_matching(G)
-                candidate1 = {u for u, _ in new_matching}
-                candidate2 = {v for _, v in new_matching}
+                maximal_matching = nx.matching.maximal_matching(G)
+                candidate1 = {u for u, _ in maximal_matching}
+                candidate2 = {v for _, v in maximal_matching}
                 d1 = sum(G.degree(u) for u in candidate1)
                 d2 = sum(G.degree(v) for v in candidate2)
                 best_candidate = candidate1 if d1 >= d2 else candidate2
