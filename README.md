@@ -65,12 +65,34 @@ Vertex Cover Found `0, 1, 2`: Nodes `0, 1, 2` form an optimal solution.
 
 ## Algorithm Overview
 
-1. **Input Validation:** Ensures the input is a valid sparse adjacency matrix.
-2. **Graph Construction:** Converts the matrix into a graph using `networkx`.
-3. **Component Decomposition:** Breaks the graph into connected components.
-4. **Minimum Spanning Tree (MST):** Computes an MST for each component.
-5. **Bipartition and Matching:** Treats the MST as a bipartite graph and finds a maximum matching.
-6. **Vertex Cover Construction:** Combines vertex covers from all components.
+1. **Input Validation**  
+   Ensures the input is a valid sparse adjacency matrix.
+
+2. **Graph Construction**  
+   Converts the sparse adjacency matrix into a graph using the `networkx` library.
+
+3. **Component Decomposition**  
+   Decomposes the graph into its connected components for independent processing.
+
+4. **Bipartition and Matching**  
+   For each connected component that is a bipartite graph:
+
+   - Find a **maximum matching** using an appropriate algorithm (e.g., Hopcroft-Karp).
+   - Construct a **vertex cover** from the matching.
+
+5. **Vertex Cover Construction**  
+   Combines the vertex covers obtained from all bipartite components.
+
+6. **Maximal Matching for Non-Bipartite Components**  
+   For connected components that are **not bipartite**:
+
+   - Find a **maximal matching** (not to be confused with maximum matching) using a greedy algorithm.
+   - Select one endpoint for each edge in the matching, prioritizing vertices with higher degrees.
+
+7. **Iterative Processing**
+   - Remove the selected vertices from the graph.
+   - Split the remaining graph into new connected components.
+   - Repeat the process until all edges are covered.
 
 ## Correctness
 
@@ -79,8 +101,8 @@ Vertex Cover Found `0, 1, 2`: Nodes `0, 1, 2` form an optimal solution.
 ## Runtime Analysis
 
 - **Graph Construction:** $O(|V| + |E|)$
-- **MST Computation:** $O(|E| \log |V|)$ (Kruskal's algorithm)
-- **Maximum Matching:** $O(|V|^{1.5})$ (Hopcroft-Karp algorithm)
+- **Maximum Matching:** $O(|E| \log |V|)$ (Hopcroft-Karp algorithm)
+- **Maximal Matching:** $O(|E|)$
 
 Overall, the algorithm runs in **polynomial time**.
 

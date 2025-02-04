@@ -182,28 +182,67 @@
     <h2>Algorithm Overview</h2>
     <ol>
       <li>
-        <strong>Input Validation:</strong> Ensures the input is a valid sparse
-        adjacency matrix.
+        <p>
+          <strong>Input Validation</strong><br />
+          Ensures the input is a valid sparse adjacency matrix.
+        </p>
       </li>
       <li>
-        <strong>Graph Construction:</strong> Converts the matrix into a graph
-        using <code>networkx</code>.
+        <p>
+          <strong>Graph Construction</strong><br />
+          Converts the sparse adjacency matrix into a graph using the
+          <code>networkx</code> library.
+        </p>
       </li>
       <li>
-        <strong>Component Decomposition:</strong> Breaks the graph into
-        connected components.
+        <p>
+          <strong>Component Decomposition</strong><br />
+          Decomposes the graph into its connected components for independent
+          processing.
+        </p>
       </li>
       <li>
-        <strong>Minimum Spanning Tree (MST):</strong> Computes an MST for each
-        component.
+        <p>
+          <strong>Bipartition and Matching</strong><br />
+          For each connected component that is a bipartite graph:
+        </p>
+        <ul>
+          <li>
+            Find a <strong>maximum matching</strong> using an appropriate
+            algorithm (e.g., Hopcroft-Karp).
+          </li>
+          <li>Construct a <strong>vertex cover</strong> from the matching.</li>
+        </ul>
       </li>
       <li>
-        <strong>Bipartition and Matching:</strong> Treats the MST as a bipartite
-        graph and finds a maximum matching.
+        <p>
+          <strong>Vertex Cover Construction</strong><br />
+          Combines the vertex covers obtained from all bipartite components.
+        </p>
       </li>
       <li>
-        <strong>Vertex Cover Construction:</strong> Combines vertex covers from
-        all components.
+        <p>
+          <strong>Maximal Matching for Non-Bipartite Components</strong><br />
+          For connected components that are <strong>not bipartite</strong>:
+        </p>
+        <ul>
+          <li>
+            Find a <strong>maximal matching</strong> (not to be confused with
+            maximum matching) using a greedy algorithm.
+          </li>
+          <li>
+            Select one endpoint for each edge in the matching, prioritizing
+            vertices with higher degrees.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Iterative Processing</strong></p>
+        <ul>
+          <li>Remove the selected vertices from the graph.</li>
+          <li>Split the remaining graph into new connected components.</li>
+          <li>Repeat the process until all edges are covered.</li>
+        </ul>
       </li>
     </ol>
     <h2>Correctness</h2>
@@ -217,13 +256,10 @@
     <ul>
       <li><strong>Graph Construction:</strong> $O(|V| + |E|)$</li>
       <li>
-        <strong>MST Computation:</strong> $O(|E| \log |V|)$ (Kruskal's
+        <strong>Maximum Matching:</strong> $O(|E| \log |V|)$ (Hopcroft-Karp
         algorithm)
       </li>
-      <li>
-        <strong>Maximum Matching:</strong> $O(|V|^{1.5})$ (Hopcroft-Karp
-        algorithm)
-      </li>
+      <li><strong>Maximal Matching:</strong> $O(|E|)$</li>
     </ul>
     <p>Overall, the algorithm runs in <strong>polynomial time</strong>.</p>
     <hr />
