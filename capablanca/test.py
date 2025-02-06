@@ -34,7 +34,7 @@ def main():
     helper.add_argument('-w', '--write', action='store_true', help='write the generated random matrix to a file in the current directory')
     helper.add_argument('-v', '--verbose', action='store_true', help='anable verbose output')
     helper.add_argument('-l', '--log', action='store_true', help='enable file logging')
-    helper.add_argument('--version', action='version', version='%(prog)s 2.9')
+    helper.add_argument('--version', action='version', version='%(prog)s 3.0')
     
     # Initialize the parameters
     args = helper.parse_args()
@@ -60,12 +60,12 @@ def main():
         logger.info(f"Number of non-zero elements: {sparse_matrix.nnz}")
         logger.info(f"Sparsity: {1 - (sparse_matrix.nnz / (sparse_matrix.shape[0] * sparse_matrix.shape[1]))}")
         
-        logger.info("An Approximate Solution with an approximation ratio of 7/5 started")
+        logger.info("An Approximate Solution with an approximation ratio of < 2 started")
         started = time.time()
         
         result = algorithm.find_vertex_cover(sparse_matrix)
 
-        logger.info(f"An Approximate Solution with an approximation ratio of 7/5 done in: {(time.time() - started) * 1000.0} milliseconds")
+        logger.info(f"An Approximate Solution with an approximation ratio of < 2 done in: {(time.time() - started) * 1000.0} milliseconds")
 
         answer = utils.string_result_format(result, count)
         output = f"Algorithm Smart Test {i + 1}: {answer}" 

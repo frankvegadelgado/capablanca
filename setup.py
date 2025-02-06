@@ -2,7 +2,7 @@ from pathlib import Path
 
 import setuptools
 
-VERSION = "2.9"
+VERSION = "3.0"
 
 NAME = "capablanca"
 
@@ -15,7 +15,7 @@ INSTALL_REQUIRES = [
 setuptools.setup(
     name=NAME,
     version=VERSION,
-    description="Estimating the Minimum Vertex Cover with an approximation factor of 7/5 for large enough undirected graphs encoded as a Boolean adjacency matrix stored in a file.",
+    description="Estimating the Minimum Vertex Cover with an approximation factor of < 2 for an undirected graph encoded as a Boolean adjacency matrix stored in a file.",
     url="https://github.com/frankvegadelgado/capablanca",
     project_urls={
         "Source Code": "https://github.com/frankvegadelgado/capablanca",
