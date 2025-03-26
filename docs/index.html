@@ -210,10 +210,10 @@
       <li>
         <strong>Process</strong>:
         <ol>
-          <li>Verifies chordality ($O(n + m)$).</li>
+          <li>Verifies chordality $O(n + m)$.</li>
           <li>
             Computes a perfect elimination ordering (PEO) and reverses it
-            ($O(n)$).
+            $O(n)$.
           </li>
           <li>
             Iterates over nodes in reverse PEO:
@@ -377,7 +377,7 @@
       </li>
       <li>
         <strong>Outer Algorithm</strong>: $O(n^3)$, dominated by the cubic cost
-        per component due to the dense chordal graph ($O(n_i^2)$ edges)
+        per component due to the dense chordal graph, $O(n_i^2)$ edges,
         amplifying the inner $O(nm)$ runtime.
       </li>
       <li>

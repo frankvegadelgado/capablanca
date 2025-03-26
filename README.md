@@ -82,8 +82,8 @@ The `find_dominating_set` algorithm computes a 2-approximation for the minimum d
 
 - **Input**: A chordal graph $G$ with $n$ nodes and $m$ edges.
 - **Process**:
-  1. Verifies chordality ($O(n + m)$).
-  2. Computes a perfect elimination ordering (PEO) and reverses it ($O(n)$).
+  1. Verifies chordality $O(n + m)$.
+  2. Computes a perfect elimination ordering (PEO) and reverses it $O(n)$.
   3. Iterates over nodes in reverse PEO:
      - For each undominated node $v$, selects a vertex from $N[v]$ (self and neighbors) that maximizes the number of undominated nodes covered.
      - Updates the dominating set and marks covered nodes as dominated.
@@ -144,7 +144,7 @@ The `find_dominating_set` algorithm computes a 2-approximation for the minimum d
 ## Summary
 
 - **Inner Algorithm**: $O(nm)$, efficient for chordal graphs with runtime dependent on edge density.
-- **Outer Algorithm**: $O(n^3)$, dominated by the cubic cost per component due to the dense chordal graph ($O(n_i^2)$ edges) amplifying the inner $O(nm)$ runtime.
+- **Outer Algorithm**: $O(n^3)$, dominated by the cubic cost per component due to the dense chordal graph, $O(n_i^2)$ edges, amplifying the inner $O(nm)$ runtime.
 - **Correctness and Approximation**: Both algorithms produce dominating sets, with the outer algorithm preserving the 2-approximation by transforming general graphs into chordal ones, as verified through proofs and examples.
 
 This $O(n^3)$ runtime reflects the current dense clique construction; optimizing the chordal transformation could potentially lower it to $O(n^2)$ or $O(nm)$.
