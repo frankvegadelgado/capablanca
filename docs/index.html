@@ -44,103 +44,397 @@
     ></script>
   </head>
   <body>
-    <h1>Capablanca: Minimum Vertex Cover Solver</h1>
+    <h1>Capablanca: 2-Approximation Dominating Set Solver</h1>
     <p>
       <img
         src="capablanca.jpg"
         alt="Honoring the Memory of Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)"
       />
     </p>
+    <p>
+      This work builds upon
+      <a
+        href="https://www.researchgate.net/publication/390201106_A_2-Approximation_Algorithm_for_Dominating_Sets"
+        >A 2-Approximation Algorithm for Dominating Sets</a
+      >.
+    </p>
     <hr />
-    <h1>The Minimum Vertex Cover Problem</h1>
+    <h1>Overview of the Minimum Dominating Set (MDS)</h1>
+    <h2>Definition:</h2>
     <p>
-      The <strong>Minimum Vertex Cover (MVC)</strong> problem is a classic
-      optimization problem in computer science and graph theory. It involves
-      finding the smallest set of vertices in a graph that
-      <strong>covers</strong> all edges, meaning at least one endpoint of every
-      edge is included in the set.
+      A <strong>dominating set</strong> in a graph $G = (V, E)$ is a subset $D
+      \subseteq V$ such that every vertex not in $D$ is adjacent to at least one
+      vertex in $D$. The <strong>minimum dominating set (MDS)</strong> is the
+      smallest possible dominating set in terms of the number of vertices.
     </p>
-    <h2>Formal Definition</h2>
-    <p>
-      Given an undirected graph $G = (V, E)$, a <strong>vertex cover</strong> is
-      a subset $V' \subseteq V$ such that for every edge $(u, v) \in E$, at
-      least one of $u$ or $v$ belongs to $V'$. The MVC problem seeks the vertex
-      cover with the smallest cardinality.
-    </p>
-    <h2>Importance and Applications</h2>
-    <ul>
+    <h2>Key Concepts:</h2>
+    <ol>
       <li>
-        <strong>Theoretical Significance:</strong> MVC is a well-known NP-hard
-        problem, central to complexity theory.
+        <p><strong>Graph Representation</strong>:</p>
+        <ul>
+          <li>$V$: Set of vertices.</li>
+          <li>$E$: Set of edges connecting the vertices.</li>
+        </ul>
       </li>
       <li>
-        <strong>Practical Applications:</strong>
+        <p><strong>Dominating Set</strong>:</p>
         <ul>
           <li>
-            <strong>Network Security:</strong> Identifying critical nodes to
-            disrupt connections.
-          </li>
-          <li>
-            <strong>Bioinformatics:</strong> Analyzing gene regulatory networks.
-          </li>
-          <li>
-            <strong>Wireless Sensor Networks:</strong> Optimizing sensor
-            coverage.
+            A set $D$ where for every vertex $v \in V$, either $v \in D$ or $v$
+            is adjacent to some vertex in $D$.
           </li>
         </ul>
       </li>
-    </ul>
-    <h2>Related Problems</h2>
+      <li>
+        <p><strong>Minimum Dominating Set</strong>:</p>
+        <ul>
+          <li>
+            The dominating set with the smallest cardinality (i.e., the fewest
+            number of vertices).
+          </li>
+        </ul>
+      </li>
+    </ol>
+    <h2>Applications:</h2>
     <ul>
       <li>
-        <strong>Maximum Independent Set:</strong> The complement of a vertex
-        cover.
+        <strong>Network Design</strong>: Ensuring coverage in wireless sensor
+        networks.
       </li>
-      <li><strong>Set Cover Problem:</strong> A generalization of MVC.</li>
+      <li><strong>Social Networks</strong>: Identifying influential nodes.</li>
+      <li>
+        <strong>Game Theory</strong>: Strategies in certain types of games.
+      </li>
+      <li>
+        <strong>Biology</strong>: Modeling protein-protein interaction networks.
+      </li>
     </ul>
+    <h2>Computational Complexity:</h2>
+    <ul>
+      <li>
+        <strong>NP-Hard</strong>: Finding the minimum dominating set is
+        computationally intensive for large graphs.
+      </li>
+      <li>
+        <strong>Approximation Algorithms</strong>: Used to find near-optimal
+        solutions in polynomial time.
+      </li>
+    </ul>
+    <h2>Algorithms:</h2>
+    <ol>
+      <li>
+        <p><strong>Greedy Algorithm</strong>:</p>
+        <ul>
+          <li>
+            Iteratively selects the vertex that covers the most uncovered
+            vertices.
+          </li>
+          <li>Provides a logarithmic approximation ratio.</li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Integer Linear Programming (ILP)</strong>:</p>
+        <ul>
+          <li>Formulates the problem as an optimization problem.</li>
+          <li>
+            Solvable using ILP solvers for exact solutions, though
+            computationally expensive.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <p><strong>Heuristics and Metaheuristics</strong>:</p>
+        <ul>
+          <li>
+            Genetic algorithms, simulated annealing, etc., for large-scale
+            problems.
+          </li>
+        </ul>
+      </li>
+    </ol>
+    <h2>Challenges:</h2>
+    <ul>
+      <li>
+        <strong>Scalability</strong>: Exact algorithms are infeasible for very
+        large graphs.
+      </li>
+      <li>
+        <strong>Dynamic Graphs</strong>: Maintaining a minimum dominating set in
+        graphs that change over time.
+      </li>
+    </ul>
+    <h2>Research Directions:</h2>
+    <ul>
+      <li>
+        <strong>Parallel Algorithms</strong>: Leveraging multi-core processors
+        and distributed computing.
+      </li>
+      <li>
+        <strong>Machine Learning</strong>: Using learning-based approaches to
+        predict dominating sets.
+      </li>
+      <li>
+        <strong>Hybrid Methods</strong>: Combining exact and heuristic methods
+        for better performance.
+      </li>
+    </ul>
+    <h2>Conclusion:</h2>
+    <p>
+      The minimum dominating set problem is a fundamental issue in graph theory
+      with wide-ranging applications. While it is computationally challenging,
+      various algorithms and heuristics provide practical solutions for
+      different scenarios. Ongoing research continues to improve the efficiency
+      and applicability of these methods.
+    </p>
+    <hr />
+    <h1>
+      Overview of the <code>find_dominating_set</code> Algorithm and Runtime
+      Analysis
+    </h1>
+    <h2>Algorithm Purpose</h2>
+    <p>
+      The <code>find_dominating_set</code> algorithm computes a 2-approximation
+      for the minimum dominating set in a general undirected graph. It
+      transforms the input graph into a chordal structure and leverages the
+      <code>approximate_dominating_set_chordal</code> algorithm, which is proven
+      to provide a 2-approximation for chordal graphs. This approach ensures
+      applicability to any graph while maintaining the approximation guarantee.
+    </p>
+    <h2>Algorithm Structure</h2>
+    <h3><code>approximate_dominating_set_chordal</code> (Inner Algorithm)</h3>
+    <ul>
+      <li>
+        <strong>Input</strong>: A chordal graph $G$ with $n$ nodes and $m$
+        edges.
+      </li>
+      <li>
+        <strong>Process</strong>:
+        <ol>
+          <li>Verifies chordality ($O(n + m)$).</li>
+          <li>
+            Computes a perfect elimination ordering (PEO) and reverses it
+            ($O(n)$).
+          </li>
+          <li>
+            Iterates over nodes in reverse PEO:
+            <ul>
+              <li>
+                For each undominated node $v$, selects a vertex from $N[v]$
+                (self and neighbors) that maximizes the number of undominated
+                nodes covered.
+              </li>
+              <li>
+                Updates the dominating set and marks covered nodes as dominated.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+      <li>
+        <strong>Output</strong>: A dominating set $D$ such that $|D| \leq 2
+        \cdot |OPT|$, where $OPT$ is the minimum dominating set.
+      </li>
+      <li>
+        <strong>Key Mechanism</strong>: Greedy selection based on undominated
+        coverage, leveraging chordal graph properties (PEO ensures structured
+        neighborhoods).
+      </li>
+    </ul>
+    <h3><code>find_dominating_set</code> (Outer Algorithm)</h3>
+    <ul>
+      <li>
+        <strong>Input</strong>: A general undirected graph $G$ with $n$ nodes
+        and $m$ edges.
+      </li>
+      <li>
+        <strong>Process</strong>:
+        <ol>
+          <li>
+            <strong>Preprocessing</strong>:
+            <ul>
+              <li>Handles trivial cases (empty graph or no edges): $O(1)$.</li>
+              <li>
+                Identifies and removes isolated nodes, adding them to the
+                dominating set: $O(n + m)$.
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Component Processing</strong>:
+            <ul>
+              <li>Identifies connected components: $O(n + m)$.</li>
+              <li>
+                For each component with $n_i$ nodes and $m_i$ edges:
+                <ul>
+                  <li><strong>Subgraph Extraction</strong>: $O(n_i + m_i)$.</li>
+                  <li>
+                    <strong>Chordal Transformation</strong>:
+                    <ul>
+                      <li>
+                        Creates a chordal graph with $2n_i$ nodes and $O(n_i^2)$
+                        edges (includes a clique on $n_i$ nodes).
+                      </li>
+                      <li>Construction time: $O(n_i^2)$.</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Inner Algorithm Call</strong>: Applies
+                    <code>approximate_dominating_set_chordal</code> to the
+                    chordal graph.
+                  </li>
+                  <li>
+                    <strong>Mapping Back</strong>: Extracts original node
+                    indices: $O(n_i)$.
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Output</strong>: Combines dominating sets from isolated
+            nodes and components.
+          </li>
+        </ol>
+      </li>
+      <li>
+        <strong>Output</strong>: A dominating set for $G$ with size at most
+        twice the minimum dominating set size.
+      </li>
+    </ul>
+    <h2>Runtime Analysis</h2>
+    <h3><code>approximate_dominating_set_chordal</code></h3>
+    <ul>
+      <li>
+        <strong>Preprocessing</strong>:
+        <ul>
+          <li>Chordality check and PEO: $O(n + m)$.</li>
+          <li>Reverse PEO and initialization: $O(n)$.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Main Loop</strong>:
+        <ul>
+          <li>
+            Iterates $n$ times, but costly steps occur $|D| \leq n$ times.
+          </li>
+          <li>
+            For each selected $v$:
+            <ul>
+              <li>Computes $N[v]$: $O(d_v)$.</li>
+              <li>
+                For each $w \in N[v]$ (size $d_v + 1$), counts undominated in
+                $N[w]$: $O(d_w)$.
+              </li>
+              <li>Total per $v$: $O(\sum_{w \in N[v]} d_w) \leq O(m)$.</li>
+            </ul>
+          </li>
+          <li>Overall: $O(n \cdot m)$ (e.g., in a clique, $m \approx n^2$).</li>
+        </ul>
+      </li>
+      <li><strong>Total</strong>: $O(n + m) + O(nm) = O(nm)$.</li>
+    </ul>
+    <h3><code>find_dominating_set</code></h3>
+    <ul>
+      <li>
+        <strong>Preprocessing</strong>:
+        <ul>
+          <li>Isolated nodes and removal: $O(n + m)$.</li>
+          <li>Connected components: $O(n + m)$.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Component Loop</strong>:
+        <ul>
+          <li>
+            $k$ components, $\sum n_i = n' \leq n$, $\sum m_i = m' \leq m$.
+          </li>
+          <li>
+            Per component:
+            <ul>
+              <li>Subgraph: $O(n_i + m_i)$.</li>
+              <li>
+                Chordal graph: $n' = 2n_i$, $m' = n_i + m_i + {n_i \choose 2} =
+                O(n_i^2)$, construction $O(n_i^2)$.
+              </li>
+              <li>Inner call: $O(n'm') = O(2n_i \cdot n_i^2) = O(n_i^3)$.</li>
+              <li>Update: $O(n_i)$.</li>
+              <li>Total per component: $O(n_i^3)$.</li>
+            </ul>
+          </li>
+          <li>
+            Across all components: $\sum O(n_i^3) \leq O(n^3)$ (worst case: one
+            component with $n$ nodes).
+          </li>
+        </ul>
+      </li>
+      <li><strong>Total</strong>: $O(n + m) + O(n^3) = O(n^3)$.</li>
+    </ul>
+    <h2>Summary</h2>
+    <ul>
+      <li>
+        <strong>Inner Algorithm</strong>: $O(nm)$, efficient for chordal graphs
+        with runtime dependent on edge density.
+      </li>
+      <li>
+        <strong>Outer Algorithm</strong>: $O(n^3)$, dominated by the cubic cost
+        per component due to the dense chordal graph ($O(n_i^2)$ edges)
+        amplifying the inner $O(nm)$ runtime.
+      </li>
+      <li>
+        <strong>Correctness and Approximation</strong>: Both algorithms produce
+        dominating sets, with the outer algorithm preserving the 2-approximation
+        by transforming general graphs into chordal ones, as verified through
+        proofs and examples.
+      </li>
+    </ul>
+    <p>
+      This $O(n^3)$ runtime reflects the current dense clique construction;
+      optimizing the chordal transformation could potentially lower it to
+      $O(n^2)$ or $O(nm)$.
+    </p>
     <hr />
     <h2>Problem Statement</h2>
     <p>Input: A Boolean Adjacency Matrix $M$.</p>
-    <p>Answer: Find a Minimum Vertex Cover.</p>
+    <p>Answer: Find a Minimum Dominating Set.</p>
     <h3>Example Instance: 5 x 5 matrix</h3>
     <table>
       <thead>
         <tr>
           <th></th>
-          <th>c0</th>
           <th>c1</th>
           <th>c2</th>
           <th>c3</th>
           <th>c4</th>
+          <th>c5</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>r0</strong></td>
-          <td>0</td>
-          <td>0</td>
-          <td>1</td>
-          <td>0</td>
-          <td>1</td>
-        </tr>
-        <tr>
           <td><strong>r1</strong></td>
           <td>0</td>
           <td>0</td>
-          <td>0</td>
           <td>1</td>
           <td>0</td>
+          <td>1</td>
         </tr>
         <tr>
           <td><strong>r2</strong></td>
-          <td>1</td>
           <td>0</td>
           <td>0</td>
           <td>0</td>
           <td>1</td>
+          <td>0</td>
         </tr>
         <tr>
           <td><strong>r3</strong></td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td><strong>r4</strong></td>
           <td>0</td>
           <td>1</td>
           <td>0</td>
@@ -148,7 +442,7 @@
           <td>0</td>
         </tr>
         <tr>
-          <td><strong>r4</strong></td>
+          <td><strong>r5</strong></td>
           <td>1</td>
           <td>0</td>
           <td>1</td>
@@ -158,110 +452,34 @@
       </tbody>
     </table>
     <p>
-      A matrix is represented in a text file using the following string
-      representation:
+      The input for undirected graph is typically provided in
+      <a href="http://dimacs.rutgers.edu/Challenges">DIMACS</a> format. In this
+      way, the previous adjacency matrix is represented in a text file using the
+      following string representation:
     </p>
-    <pre><code>00101
-00010
-10001
-01000
-10100
+    <pre><code>p edge 5 4
+e 1 3
+e 1 5
+e 2 4
+e 3 5
 </code></pre>
     <p>
-      This represents a 5x5 matrix where each line corresponds to a row, and '1'
-      indicates a connection or presence of an element, while '0' indicates its
-      absence.
+      This represents a 5x5 matrix in DIMACS format such that each edge $(v,w)$
+      appears exactly once in the input file and is not repeated as $(w,v)$. In
+      this format, every edge appears in the form of
+    </p>
+    <pre><code>e W V
+</code></pre>
+    <p>
+      where the fields W and V specify the endpoints of the edge while the
+      lower-case character <code>e</code> signifies that this is an edge
+      descriptor line.
     </p>
     <p><em>Example Solution:</em></p>
     <p>
-      Vertex Cover Found <code>0, 1, 2</code>: Nodes <code>0, 1, 2</code> form
-      an optimal solution.
+      Dominating Set Found <code>1, 2</code>: Nodes <code>1</code> and
+      <code>2</code> constitute an optimal solution.
     </p>
-    <hr />
-    <h1>Our Algorithm - Polynomial Runtime</h1>
-    <h2>Algorithm Overview</h2>
-    <ol>
-      <li>
-        <p>
-          <strong>Input Validation</strong><br />
-          Ensures the input is a valid sparse adjacency matrix.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Graph Construction</strong><br />
-          Converts the sparse adjacency matrix into a graph using the
-          <code>networkx</code> library.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Component Decomposition</strong><br />
-          Decomposes the graph into its connected components for independent
-          processing.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Bipartition and Matching</strong><br />
-          For each connected component that is a bipartite graph:
-        </p>
-        <ul>
-          <li>
-            Find a <strong>maximum matching</strong> using an appropriate
-            algorithm (e.g., Hopcroft-Karp).
-          </li>
-          <li>Construct a <strong>vertex cover</strong> from the matching.</li>
-        </ul>
-      </li>
-      <li>
-        <p>
-          <strong>Vertex Cover Construction</strong><br />
-          Combines the vertex covers obtained from all bipartite components.
-        </p>
-      </li>
-      <li>
-        <p>
-          <strong>Maximal Matching for Non-Bipartite Components</strong><br />
-          For connected components that are <strong>not bipartite</strong>:
-        </p>
-        <ul>
-          <li>
-            Find a <strong>maximal matching</strong> (not to be confused with
-            maximum matching) using a greedy algorithm.
-          </li>
-          <li>
-            Select one endpoint for each edge in the matching, prioritizing
-            vertices with higher degrees.
-          </li>
-        </ul>
-      </li>
-      <li>
-        <p><strong>Iterative Processing</strong></p>
-        <ul>
-          <li>Remove the selected vertices from the graph.</li>
-          <li>Split the remaining graph into new connected components.</li>
-          <li>Repeat the process until all edges are covered.</li>
-        </ul>
-      </li>
-    </ol>
-    <h2>Correctness</h2>
-    <ul>
-      <li>
-        Ensures all edges are covered by leveraging bipartite graph properties
-        and maximum matchings.
-      </li>
-    </ul>
-    <h2>Runtime Analysis</h2>
-    <ul>
-      <li><strong>Graph Construction:</strong> $O(|V| + |E|)$</li>
-      <li>
-        <strong>Maximum Matching:</strong> $O(|E| \log |V|)$ (Hopcroft-Karp
-        algorithm)
-      </li>
-      <li><strong>Maximal Matching:</strong> $O(|E|)$</li>
-    </ul>
-    <p>Overall, the algorithm runs in <strong>polynomial time</strong>.</p>
     <hr />
     <h1>Compile and Environment</h1>
     <h2>Prerequisites</h2>
@@ -281,62 +499,92 @@ cd capablanca
       </li>
       <li>
         <p>Run the script:</p>
-        <pre><code class="language-bash">cover -i ./benchmarks/testMatrix1.txt
+        <pre><code class="language-bash">approx -i ./benchmarks/testMatrix1
 </code></pre>
         <p>
-          utilizing the <code>cover</code> command provided by Capablanca's
+          utilizing the <code>approx</code> command provided by Capablanca's
           Library to execute the Boolean adjacency matrix
-          <code>capablanca\benchmarks\testMatrix1.txt</code>. The file
-          <code>testMatrix1.txt</code> represents the example described herein.
-          We also support <code>.xz</code>, <code>.lzma</code>,
-          <code>.bz2</code>, and <code>.bzip2</code> compressed
-          <code>.txt</code> files.
+          <code>capablanca\benchmarks\testMatrix1</code>. The file
+          <code>testMatrix1</code> represents the example described herein. We
+          also support <code>.xz</code>, <code>.lzma</code>, <code>.bz2</code>,
+          and <code>.bzip2</code> compressed text files.
         </p>
         <p><strong>Example Output:</strong></p>
-        <pre><code>testMatrix1.txt: Vertex Cover Found 0, 1, 2
+        <pre><code>testMatrix1: Dominating Set Found 1, 2
 </code></pre>
-        <p>This indicates nodes <code>0, 1, 2</code> form a vertex cover.</p>
+        <p>This indicates nodes <code>1, 2</code> form a Dominating Set.</p>
       </li>
     </ol>
     <hr />
-    <h2>Vertex Cover Size</h2>
-    <p>Use the <code>-c</code> flag to count the nodes in the vertex cover:</p>
-    <pre><code class="language-bash">cover -i ./benchmarks/testMatrix2.txt -c
+    <h2>Dominating Set Size</h2>
+    <p>
+      Use the <code>-c</code> flag to count the nodes in the Dominating Set:
+    </p>
+    <pre><code class="language-bash">approx -i ./benchmarks/testMatrix2 -c
 </code></pre>
     <p><strong>Output:</strong></p>
-    <pre><code>testMatrix2.txt: Vertex Cover Size 6
+    <pre><code>testMatrix2: Dominating Set Size 2
 </code></pre>
     <hr />
     <h1>Command Options</h1>
     <p>Display help and options:</p>
-    <pre><code class="language-bash">cover -h
+    <pre><code class="language-bash">approx -h
 </code></pre>
     <p><strong>Output:</strong></p>
-    <pre><code class="language-bash">usage: cover [-h] -i INPUTFILE [-a] [-b] [-c] [-v] [-l] [--version]
+    <pre><code class="language-bash">usage: approx [-h] -i INPUTFILE [-a] [-b] [-c] [-v] [-l] [--version]
 
-Estimating the Minimum Vertex Cover with an approximation factor of &lt; 2 for an undirected graph encoded as a Boolean adjacency matrix stored in a file.
+Find a 2-Approximate Dominating Set for undirected graph encoded in DIMACS format.
 
 options:
   -h, --help            show this help message and exit
   -i INPUTFILE, --inputFile INPUTFILE
                         input file path
-  -a, --approximation   enable comparison with a polynomial-time approximation approach within a factor of 2
+  -a, --approximation   enable comparison with a polynomial-time approximation approach within a logarithmic factor
   -b, --bruteForce      enable comparison with the exponential-time brute-force approach
-  -c, --count           calculate the size of the vertex cover
-  -v, --verbose         enable verbose output
+  -c, --count           calculate the size of the Dominating Set
+  -v, --verbose         anable verbose output
+  -l, --log             enable file logging
+  --version             show program's version number and exit
+</code></pre>
+    <hr />
+    <h1>Batch Execution</h1>
+    <p>
+      Batch execution allows you to solve multiple graphs within a directory
+      consecutively.
+    </p>
+    <p>
+      To view available command-line options for the
+      <code>batch_approx</code> command, use the following in your terminal or
+      command prompt:
+    </p>
+    <pre><code class="language-bash">batch_approx -h
+</code></pre>
+    <p>This will display the following help information:</p>
+    <pre><code class="language-bash">usage: batch_approx [-h] -i INPUTDIRECTORY [-a] [-b] [-c] [-v] [-l] [--version]
+
+Find a 2-Approximate Dominating Set for all undirected graphs encoded in DIMACS format and stored in a directory.
+
+options:
+  -h, --help            show this help message and exit
+  -i INPUTDIRECTORY, --inputDirectory INPUTDIRECTORY
+                        Input directory path
+  -a, --approximation   enable comparison with a polynomial-time approximation approach within a logarithmic factor
+  -b, --bruteForce      enable comparison with the exponential-time brute-force approach
+  -c, --count           calculate the size of the Dominating Set
+  -v, --verbose         anable verbose output
   -l, --log             enable file logging
   --version             show program's version number and exit
 </code></pre>
     <hr />
     <h1>Testing Application</h1>
     <p>
-      A command-line utility named <code>test_cover</code> is provided for
+      A command-line utility named <code>test_approx</code> is provided for
       evaluating the Algorithm using randomly generated, large sparse matrices.
       It supports the following options:
     </p>
-    <pre><code class="language-bash">usage: test_cover [-h] -d DIMENSION [-n NUM_TESTS] [-s SPARSITY] [-a] [-b] [-c] [-w] [-v] [-l] [--version]
+    <pre><code class="language-bash">usage: test_approx [-h] -d DIMENSION [-n NUM_TESTS] [-s SPARSITY] [-a] [-b] [-c] [-w] [-v] [-l] [--version]
 
-The Capablanca Testing Application.
+The Capablanca Testing Application using randomly generated, large sparse matrices.
 
 options:
   -h, --help            show this help message and exit
@@ -346,11 +594,11 @@ options:
                         an integer specifying the number of tests to run
   -s SPARSITY, --sparsity SPARSITY
                         sparsity of the matrices (0.0 for dense, close to 1.0 for very sparse)
-  -a, --approximation   enable comparison with a polynomial-time approximation approach within a factor of 2
+  -a, --approximation   enable comparison with a polynomial-time approximation approach within a logarithmic factor
   -b, --bruteForce      enable comparison with the exponential-time brute-force approach
-  -c, --count           calculate the size of the vertex cover
+  -c, --count           calculate the size of the Dominating Set
   -w, --write           write the generated random matrix to a file in the current directory
-  -v, --verbose         enable verbose output
+  -v, --verbose         anable verbose output
   -l, --log             enable file logging
   --version             show program's version number and exit
 </code></pre>
@@ -361,7 +609,7 @@ options:
     </ul>
     <hr />
     <h1>Complexity</h1>
-    <pre><code class="language-diff">+ This result contradicts the Unique Games Conjecture, suggesting that many optimization problems may admit better solutions, revolutionizing theoretical computer science.
+    <pre><code class="language-diff">+ We present a polynomial-time algorithm achieving a 2-approximation ratio for MDS, providing strong evidence that P = NP by efficiently solving a computationally hard problem with near-optimal solutions.
 </code></pre>
     <hr />
     <h1>License</h1>

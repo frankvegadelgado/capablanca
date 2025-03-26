@@ -2,7 +2,7 @@ from pathlib import Path
 
 import setuptools
 
-VERSION = "3.0"
+VERSION = "3.1"
 
 NAME = "capablanca"
 
@@ -15,10 +15,11 @@ INSTALL_REQUIRES = [
 setuptools.setup(
     name=NAME,
     version=VERSION,
-    description="Estimating the Minimum Vertex Cover with an approximation factor of < 2 for an undirected graph encoded as a Boolean adjacency matrix stored in a file.",
+    description="Find a 2-Approximate Dominating Set for undirected graph encoded in DIMACS format.",
     url="https://github.com/frankvegadelgado/capablanca",
     project_urls={
         "Source Code": "https://github.com/frankvegadelgado/capablanca",
+        "Documentation Research": "https://www.researchgate.net/publication/390201106_A_2-Approximation_Algorithm_for_Dominating_Sets",
     },
     author="Frank Vega",
     author_email="vega.frank@gmail.com",
@@ -44,8 +45,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     entry_points={
         'console_scripts': [
-            'cover = capablanca.app:main',
-            'test_cover = capablanca.test:main'
+            'approx = capablanca.app:main',
+            'test_approx = capablanca.test:main',
+            'batch_approx = capablanca.batch:main'
         ]
     }
 )
