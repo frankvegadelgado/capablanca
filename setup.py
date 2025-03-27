@@ -19,7 +19,7 @@ setuptools.setup(
     url="https://github.com/frankvegadelgado/capablanca",
     project_urls={
         "Source Code": "https://github.com/frankvegadelgado/capablanca",
-        "Documentation Research": "https://www.researchgate.net/publication/390201106_A_2-Approximation_Algorithm_for_Dominating_Sets",
+        "Documentation Research": "https://dev.to/frank_vega_987689489099bf/a-2-approximation-algorithm-for-dominating-sets-1aga",
     },
     author="Frank Vega",
     author_email="vega.frank@gmail.com",

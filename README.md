@@ -2,7 +2,7 @@
 
 ![Honoring the Memory of Jose Raul Capablanca (Third World Chess Champion from 1921 to 1927)](docs/capablanca.jpg)
 
-This work builds upon [A 2-Approximation Algorithm for Dominating Sets](https://www.researchgate.net/publication/390201106_A_2-Approximation_Algorithm_for_Dominating_Sets).
+This work builds upon [A 2-Approximation Algorithm for Dominating Sets](https://dev.to/frank_vega_987689489099bf/a-2-approximation-algorithm-for-dominating-sets-1aga).
 
 ---
 
